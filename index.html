@@ -1,0 +1,530 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DouxHub — Diagnóstico de Visão Comercial para Clínicas</title>
+<meta name="description" content="Diagnóstico comercial da DouxHub: descubra onde sua clínica está deixando faturamento parado. Você recebe o plano indicado no seu WhatsApp.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400&family=Sora:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --pearl:#F7F6F2;
+  --white:#FFFFFF;
+  --ink:#15110A;
+  --ink-soft:#4A4435;
+  --gold:#C9A84C;
+  --gold-deep:#A8893A;
+  --gold-pale:#F1E7CC;
+  --line:rgba(21,17,10,.12);
+  --line-gold:rgba(201,168,76,.35);
+  --radius:18px;
+  --max:860px;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  font-family:'Sora',sans-serif;font-weight:300;
+  background:var(--pearl);color:var(--ink);line-height:1.65;
+  -webkit-font-smoothing:antialiased;
+}
+.wrap{max-width:var(--max);margin:0 auto;padding:0 22px}
+h1,h2,h3{font-family:'Playfair Display',serif;font-weight:500;line-height:1.15;letter-spacing:-.01em}
+.eyebrow{
+  font-family:'Sora',sans-serif;font-size:.7rem;font-weight:600;
+  letter-spacing:.22em;text-transform:uppercase;color:var(--gold-deep);
+  display:inline-flex;align-items:center;gap:14px;margin-bottom:18px;
+}
+.eyebrow::before{content:"";width:30px;height:1px;background:var(--gold)}
+
+/* ---------- topo ---------- */
+header.top{
+  background:
+    radial-gradient(800px 420px at 88% 0%, rgba(201,168,76,.16), transparent 60%),
+    linear-gradient(115deg,#FDFCFA 0%,var(--pearl) 50%,#ECE9E0 100%);
+  border-bottom:1px solid var(--line);
+  padding:54px 0 46px;
+}
+.brand{display:flex;align-items:center;gap:12px;margin-bottom:34px}
+.brand .dot{width:10px;height:10px;border-radius:50%;background:var(--gold)}
+.brand .name{font-family:'Playfair Display',serif;font-size:1.25rem;font-weight:600}
+.brand .name span{color:var(--gold-deep)}
+.brand .tag{font-size:.72rem;color:var(--ink-soft)}
+header.top h1{font-size:clamp(1.8rem,4.6vw,2.7rem);max-width:640px;margin-bottom:14px}
+header.top h1 em{font-style:italic;color:var(--gold-deep)}
+header.top p.sub{color:var(--ink-soft);max-width:560px;font-size:.96rem}
+.top-stats{display:flex;gap:34px;margin-top:30px;flex-wrap:wrap}
+.top-stats .st .v{font-family:'Playfair Display',serif;font-size:1.7rem;color:var(--gold-deep);line-height:1}
+.top-stats .st .l{font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-soft);margin-top:4px}
+
+/* ---------- progresso ---------- */
+.progress{
+  position:sticky;top:0;z-index:40;background:rgba(247,246,242,.92);
+  backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);
+  border-bottom:1px solid var(--line);padding:12px 0;
+}
+.progress .p-in{max-width:var(--max);margin:0 auto;padding:0 22px}
+.progress .p-line{display:flex;justify-content:space-between;font-size:.74rem;color:var(--ink-soft);margin-bottom:7px}
+.progress .p-line b{color:var(--gold-deep);font-weight:600}
+.p-track{height:5px;border-radius:100px;background:rgba(21,17,10,.08);overflow:hidden}
+.p-fill{height:100%;width:0;border-radius:100px;background:linear-gradient(90deg,#D8BC6B,var(--gold-deep));transition:width .4s ease}
+
+/* ---------- form ---------- */
+main{padding:50px 0 90px}
+.section{margin-bottom:54px}
+.sec-head{margin-bottom:26px}
+.sec-head h2{font-size:1.45rem;margin-bottom:6px}
+.sec-head p{font-size:.88rem;color:var(--ink-soft);max-width:560px}
+
+.card{
+  background:var(--white);border:1px solid var(--line);border-radius:var(--radius);
+  padding:26px 26px 28px;margin-bottom:18px;
+}
+.q-head{display:flex;gap:14px;margin-bottom:6px}
+.q-num{
+  flex:none;width:30px;height:30px;border-radius:50%;
+  border:1px solid var(--line-gold);color:var(--gold-deep);
+  font-size:.74rem;font-weight:600;display:flex;align-items:center;justify-content:center;
+  transition:background .3s ease,color .3s ease;
+}
+.card.done .q-num{background:var(--gold);border-color:var(--gold);color:#1B1505}
+.q-title{font-weight:500;font-size:.99rem;line-height:1.45;padding-top:3px}
+.q-hint{font-size:.8rem;color:var(--ink-soft);margin:2px 0 16px 44px}
+.q-multi{font-size:.7rem;letter-spacing:.12em;text-transform:uppercase;color:var(--gold-deep);margin:0 0 12px 44px}
+
+.opts{display:flex;flex-direction:column;gap:10px;margin-left:44px}
+.opt{
+  display:flex;align-items:flex-start;gap:12px;cursor:pointer;
+  border:1px solid var(--line);border-radius:12px;padding:13px 16px;
+  font-size:.91rem;transition:border-color .25s ease,background .25s ease;
+  background:var(--pearl);
+}
+.opt:hover{border-color:var(--line-gold)}
+.opt input{position:absolute;opacity:0;pointer-events:none}
+.opt .mark{
+  flex:none;width:18px;height:18px;margin-top:2px;border-radius:50%;
+  border:1.5px solid rgba(21,17,10,.3);position:relative;transition:border-color .2s ease;
+}
+.opt.check .mark{border-radius:5px}
+.opt .mark::after{
+  content:"";position:absolute;inset:3px;border-radius:50%;
+  background:var(--gold-deep);opacity:0;transition:opacity .2s ease;
+}
+.opt.check .mark::after{border-radius:2px}
+.opt.sel{border-color:var(--gold);background:var(--gold-pale)}
+.opt.sel .mark{border-color:var(--gold-deep)}
+.opt.sel .mark::after{opacity:1}
+
+.fields{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.field{display:flex;flex-direction:column;gap:7px}
+.field label{font-size:.8rem;font-weight:500}
+.field label .req{color:var(--gold-deep)}
+.field input,.field textarea,.ta{
+  font-family:'Sora',sans-serif;font-size:.92rem;font-weight:300;color:var(--ink);
+  background:var(--pearl);border:1px solid var(--line);border-radius:12px;
+  padding:13px 15px;outline:none;transition:border-color .25s ease;width:100%;
+}
+.field input:focus,.field textarea:focus,.ta:focus{border-color:var(--gold)}
+.ta{margin-left:44px;width:calc(100% - 44px);min-height:96px;resize:vertical}
+
+/* ---------- envio ---------- */
+.send{
+  background:var(--white);border:1px solid var(--line-gold);border-radius:var(--radius);
+  padding:40px 30px;text-align:center;
+}
+.send h2{font-size:1.5rem;margin-bottom:10px}
+.send p{font-size:.9rem;color:var(--ink-soft);max-width:520px;margin:0 auto 26px}
+.btn{
+  display:inline-block;font-family:'Sora',sans-serif;font-weight:500;font-size:.95rem;
+  padding:17px 40px;border-radius:100px;border:none;cursor:pointer;
+  background:linear-gradient(135deg,#D8BC6B 0%,var(--gold) 45%,var(--gold-deep) 100%);
+  color:#1B1505;box-shadow:0 10px 28px rgba(201,168,76,.35);
+  transition:transform .25s ease,box-shadow .25s ease,opacity .25s ease;
+}
+.btn:hover{transform:translateY(-2px);box-shadow:0 16px 36px rgba(201,168,76,.45)}
+.btn:disabled{opacity:.55;cursor:wait;transform:none}
+.send .safe{font-size:.74rem;color:var(--ink-soft);margin-top:16px}
+.msg{display:none;margin-top:22px;border-radius:12px;padding:18px 20px;font-size:.9rem;text-align:left}
+.msg.ok{display:block;background:var(--gold-pale);border:1px solid var(--line-gold)}
+.msg.err{display:block;background:#F6E8E4;border:1px solid rgba(160,60,40,.3);color:#6B3322}
+.msg b{font-weight:600}
+.pending{font-size:.8rem;color:#8A5A2B;margin-top:14px;display:none}
+
+footer{border-top:1px solid var(--line);padding:26px 0;font-size:.76rem;color:var(--ink-soft);text-align:center}
+
+@media (max-width:640px){
+  .fields{grid-template-columns:1fr}
+  .opts,.q-hint,.q-multi{margin-left:0}
+  .ta{margin-left:0;width:100%}
+  .card{padding:22px 18px}
+  header.top{padding:42px 0 38px}
+}
+@media (prefers-reduced-motion: reduce){
+  *{transition:none!important}
+  html{scroll-behavior:auto}
+}
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="wrap">
+    <div class="brand">
+      <span class="dot"></span>
+      <div>
+        <div class="name">Doux<span>Hub</span></div>
+        <div class="tag">Diagnóstico de visão comercial</div>
+      </div>
+    </div>
+    <span class="eyebrow">Análise estratégica da operação</span>
+    <h1>Onde sua clínica está deixando <em>faturamento parado?</em></h1>
+    <p class="sub">Este diagnóstico mapeia aquisição, atendimento, qualificação, agenda, follow-up, orçamentos, reativação e maturidade comercial. Ao final, suas respostas geram uma pontuação — e o plano indicado chega no seu WhatsApp.</p>
+    <div class="top-stats">
+      <div class="st"><div class="v">34</div><div class="l">etapas</div></div>
+      <div class="st"><div class="v">9</div><div class="l">blocos</div></div>
+      <div class="st"><div class="v">1</div><div class="l">leitura</div></div>
+    </div>
+  </div>
+</header>
+
+<div class="progress">
+  <div class="p-in">
+    <div class="p-line"><span><b id="p-count">0</b> de 34 etapas respondidas</span><span id="p-pct">0%</span></div>
+    <div class="p-track"><div class="p-fill" id="p-fill"></div></div>
+  </div>
+</div>
+
+<main>
+  <div class="wrap">
+
+    <!-- DADOS DA CLÍNICA -->
+    <section class="section">
+      <div class="sec-head">
+        <h2>Dados da clínica</h2>
+        <p>Essas informações identificam o diagnóstico e são usadas para enviar o resultado no seu WhatsApp.</p>
+      </div>
+      <div class="card">
+        <div class="fields">
+          <div class="field"><label>Nome da clínica <span class="req">*</span></label><input type="text" id="f-clinica" autocomplete="organization"></div>
+          <div class="field"><label>Responsável <span class="req">*</span></label><input type="text" id="f-resp" autocomplete="name"></div>
+          <div class="field"><label>WhatsApp <span class="req">*</span></label><input type="tel" id="f-whats" inputmode="tel" placeholder="(00) 00000-0000" autocomplete="tel"></div>
+          <div class="field"><label>Instagram</label><input type="text" id="f-insta" placeholder="@suaclinica"></div>
+          <div class="field"><label>Cidade / Estado</label><input type="text" id="f-cidade"></div>
+          <div class="field"><label>Site ou link principal</label><input type="text" id="f-site" inputmode="url"></div>
+        </div>
+      </div>
+    </section>
+
+    <div id="form-sections"></div>
+
+    <!-- ENVIO -->
+    <section class="section">
+      <div class="send">
+        <h2>Enviar diagnóstico</h2>
+        <p>Ao enviar, suas respostas geram uma pontuação que indica o plano em que sua clínica se encaixa. Logo em seguida, você recebe no WhatsApp informado o resultado e a proposta personalizada.</p>
+        <button class="btn" id="btn-send">Enviar diagnóstico</button>
+        <p class="pending" id="pending"></p>
+        <p class="safe">Resposta enviada com segurança para análise interna da DouxHub.</p>
+        <div class="msg ok" id="msg-ok"><b>Diagnóstico enviado com sucesso.</b> Recebemos suas respostas. Em instantes, o plano indicado para a sua clínica chega no WhatsApp informado.</div>
+        <div class="msg err" id="msg-err"><b>Não foi possível enviar agora.</b> Verifique sua conexão e tente novamente em alguns instantes.</div>
+      </div>
+    </section>
+
+  </div>
+</main>
+
+<footer>DouxHub · Diagnóstico de visão comercial para clínicas de estética</footer>
+
+<script>
+/* =====================================================
+   CONFIGURAÇÃO — preencha as duas linhas abaixo.
+   No Supabase: Settings > API
+   - Project URL  → SUPABASE_URL
+   - anon public  → SUPABASE_ANON_KEY
+===================================================== */
+const SUPABASE_URL = "https://cmyxfytsumyyrbrgqggk.supabase.co";
+const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImNteXhmeXRzdW15eXJicmdxZ2drIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODA4NTgxNjEsImV4cCI6MjA5NjQzNDE2MX0.EYAl6ztpVBIBcxxO_hPAetAn3cpqccOBrycgWqUB9Eg";
+
+/* =====================================================
+   PERGUNTAS
+   type: 'radio' (uma opção) | 'check' (múltipla) | 'text' (aberta)
+   s: pontuação de maturidade da opção (0 = caótico, 2 = estruturado)
+===================================================== */
+const SECTIONS = [
+{ title:"1. Aquisição de leads",
+  desc:"Vamos entender se a clínica gera demanda e se sabe de onde essa demanda vem.",
+  qs:[
+  { type:"radio", t:"Quantos novos contatos a clínica recebe por mês?", h:"Considere todos os canais.",
+    opts:[["Até 30 contatos",0],["De 31 a 100 contatos",1],["Mais de 100 contatos",2]] },
+  { type:"check", t:"Quais canais geram contatos hoje?", h:"Marque todos que entram na rotina.",
+    opts:[["Instagram"],["WhatsApp direto"],["Indicação"],["Anúncios / tráfego pago"],["Site / landing page"]] },
+  { type:"radio", t:"Qual canal mais gera contatos?", h:"Escolha o canal principal.",
+    opts:[["Instagram / indicação / orgânico",0],["WhatsApp direto",1],["Anúncios / tráfego pago",2]] },
+  { type:"radio", t:"Como você avalia a qualidade dos leads?", h:"Se chegam pessoas prontas ou muito frias.",
+    opts:[["Muitos curiosos e pouco qualificados",0],["Misturado: alguns bons, outros fracos",1],["Boa parte já chega interessada",2]] },
+  { type:"radio", t:"A clínica sabe de onde veio cada lead?", h:"Origem, campanha, indicação ou rede social.",
+    opts:[["Não sabemos com clareza",0],["Às vezes conseguimos identificar",1],["Sim, temos controle da origem",2]] }
+]},
+{ title:"2. Atendimento e organização",
+  desc:"Aqui medimos se o interesse que chega vira conversa bem conduzida.",
+  qs:[
+  { type:"radio", t:"Como os contatos são organizados hoje?", h:"Se existe controle ou tudo fica espalhado.",
+    opts:[["WhatsApp/Instagram, sem controle claro",0],["Planilha ou anotações manuais",1],["Sistema, CRM ou agenda organizada",2]] },
+  { type:"radio", t:"Quanto tempo a clínica costuma levar para responder um novo contato?", h:"Tempo médio nos horários de movimento.",
+    opts:[["Horas ou até no dia seguinte",0],["Entre 30 minutos e algumas horas",1],["Normalmente em poucos minutos",2]] },
+  { type:"radio", t:"Existe padrão de atendimento?", h:"Mensagem, perguntas certas, sequência e próximos passos.",
+    opts:[["Não, cada pessoa responde de um jeito",0],["Existe algo básico, mas sem clareza",1],["Sim, temos padrão de atendimento",2]] },
+  { type:"check", t:"Quais problemas aparecem no atendimento?", h:"Marque tudo que acontece hoje.",
+    opts:[["Demora para responder"],["Contato fica esquecido"],["Não tem histórico claro"],["Cada atendente responde de um jeito"],["Não existe próximo passo claro"],["Não vejo grandes problemas"]] }
+]},
+{ title:"3. Qualificação e intenção de compra",
+  desc:"Nem todo contato tem o mesmo valor. Aqui entendemos se a clínica separa curiosos de oportunidades reais.",
+  qs:[
+  { type:"radio", t:"A clínica qualifica os leads antes de passar valores?", h:"Ex: objetivo, procedimento, urgência, histórico, expectativa.",
+    opts:[["Não, normalmente já responde o que a pessoa pede",0],["Às vezes faz algumas perguntas",1],["Sim, existe qualificação antes do próximo passo",2]] },
+  { type:"check", t:"Quais informações são coletadas antes do agendamento?", h:"Marque o que costuma ser perguntado.",
+    opts:[["Procedimento de interesse"],["Objetivo / dor da pessoa"],["Urgência"],["Histórico ou experiência anterior"],["Faixa de orçamento"],["Quase nenhuma informação"]] },
+  { type:"radio", t:"Quando a clínica costuma falar preço?", h:"Isso muda muito a conversão.",
+    opts:[["Logo no começo da conversa",0],["Depois de entender um pouco o caso",1],["Prefere levar para avaliação/consulta",2]] }
+]},
+{ title:"4. Agenda e comparecimento",
+  desc:"Aqui avaliamos se o lead consegue sair da conversa e virar compromisso real.",
+  qs:[
+  { type:"radio", t:"Como funciona o processo de agendamento?", h:"Se é simples para o lead marcar.",
+    opts:[["Manual, por conversa e disponibilidade",0],["Organizado, mas ainda depende da equipe",1],["Tem agenda/sistema ou fluxo bem claro",2]] },
+  { type:"radio", t:"A clínica sofre com faltas ou desmarcações?", h:"No-show, remarcações em cima da hora ou abandono.",
+    opts:[["Sim, acontece bastante",0],["Acontece às vezes",1],["Raramente é um problema",2]] },
+  { type:"radio", t:"A clínica envia lembretes antes do atendimento?", h:"Para reduzir faltas e aumentar comparecimento.",
+    opts:[["Não existe rotina de lembrete",0],["Envia manualmente quando lembra",1],["Existe rotina clara de confirmação/lembrete",2]] }
+]},
+{ title:"5. Orçamentos e follow-up",
+  desc:"Essa é uma das áreas onde clínicas mais perdem dinheiro sem perceber.",
+  qs:[
+  { type:"radio", t:"O que acontece com quem pediu orçamento e não fechou?", h:"Orçamentos frios, pessoas que somem ou ficam de responder.",
+    opts:[["Normalmente fica perdido no WhatsApp",0],["Às vezes retomamos depois",1],["Existe processo claro de retomada",2]] },
+  { type:"radio", t:"Quantas tentativas de follow-up são feitas normalmente?", h:"Depois que o lead não responde ou não fecha.",
+    opts:[["Nenhuma ou quase nenhuma",0],["Uma tentativa",1],["Duas ou mais tentativas com rotina",2]] },
+  { type:"check", t:"Por que os contatos geralmente não fecham?", h:"Marque os motivos mais comuns.",
+    opts:[["Acham caro / pedem desconto"],["A clínica demora para retornar"],["A pessoa some depois do orçamento"],["Não existe urgência para fechar"],["Vai para concorrente"],["Não sabemos exatamente"]] },
+  { type:"check", t:"Por onde a clínica retoma contatos que esfriaram?", h:"Marque os canais usados para recuperação.",
+    opts:[["WhatsApp"],["Ligação"],["Instagram"],["E-mail"],["Não retomamos de forma estruturada"]] }
+]},
+{ title:"6. Clientes inativos e recompra",
+  desc:"Muitas clínicas têm receita parada na própria base de clientes.",
+  qs:[
+  { type:"radio", t:"A clínica tem clientes inativos que poderiam voltar?", h:"Pessoas que já compraram, mas não voltaram.",
+    opts:[["Sim, muitos clientes poderiam ser reativados",0],["Sim, alguns clientes",1],["Temos controle ativo desses clientes",2]] },
+  { type:"radio", t:"Hoje existe ação para reativar clientes antigos?", h:"Campanhas, lembretes, ofertas, retornos ou check-ins.",
+    opts:[["Não temos ação de reativação",0],["Fazemos de vez em quando",1],["Temos processo ativo de reativação",2]] },
+  { type:"check", t:"Quais oportunidades de recompra existem?", h:"Marque o que faz sentido para a clínica.",
+    opts:[["Manutenção de procedimentos"],["Novos procedimentos para clientes antigos"],["Pacotes / planos"],["Datas sazonais / campanhas"],["Não sabemos como explorar"]] }
+]},
+{ title:"7. Métricas, equipe e ferramentas",
+  desc:"Aqui medimos maturidade comercial e clareza de gestão.",
+  qs:[
+  { type:"check", t:"Quais métricas a clínica acompanha?", h:"Marque tudo que é acompanhado com regularidade.",
+    opts:[["Quantidade de leads"],["Agendamentos"],["Comparecimento"],["Fechamentos / vendas"],["Ticket médio"],["Nenhuma métrica clara"]] },
+  { type:"check", t:"Quais ferramentas a clínica usa hoje?", h:"Marque tudo que faz parte da rotina.",
+    opts:[["WhatsApp"],["Agenda digital"],["Planilha"],["CRM / sistema"],["Automação / lembretes"],["Nenhuma ferramenta estruturada"]] },
+  { type:"radio", t:"Quem cuida dos contatos comerciais?", h:"Atendimento, retorno e agenda.",
+    opts:[["A própria pessoa responsável pela clínica",0],["Recepção / atendente",1],["Equipe dedicada ou mais de uma pessoa",2]] },
+  { type:"radio", t:"A equipe consegue acompanhar todos os contatos?", h:"Sem deixar retorno, orçamento ou cliente parado.",
+    opts:[["Não, a equipe vive sobrecarregada",0],["Consegue, mas no limite",1],["Sim, conseguimos acompanhar bem",2]] }
+]},
+{ title:"8. Gargalo, urgência e decisão",
+  desc:"Por fim, entendemos a dor principal e a capacidade de avançar.",
+  qs:[
+  { type:"radio", t:"Qual é o principal gargalo hoje?", h:"O ponto que mais atrapalha vender melhor.",
+    opts:[["Responder e organizar contatos",0],["Transformar interesse em agendamento",1],["Fechar vendas e recuperar quem sumiu",2]] },
+  { type:"radio", t:"Hoje, qual é a principal dificuldade comercial?", h:"Escolha a dor central.",
+    opts:[["Organizar contatos, agenda e retornos",0],["Recuperar oportunidades e clientes parados",1],["Crescer com mais controle e performance",2]] },
+  { type:"radio", t:"O quanto esse problema impacta o faturamento?", h:"Na percepção da clínica.",
+    opts:[["Impacta pouco",0],["Impacta de forma moderada",1],["Impacta bastante",2]] },
+  { type:"radio", t:"Qual seria o momento para resolver isso?", h:"Urgência e prontidão.",
+    opts:[["Precisamos disso agora",2],["Faz sentido avaliar em breve",1],["Não é prioridade no momento",0]] },
+  { type:"radio", t:"Qual faixa mensal faria sentido investir para organizar, acompanhar e recuperar oportunidades comerciais?", h:"Não é contratação automática. É apenas para entender se a solução indicada cabe no momento da clínica.",
+    budget:true,
+    opts:[["Até R$ 297/mês",0],["Entre R$ 497 e R$ 797/mês",1],["Entre R$ 997 e R$ 1.497/mês",2],["Entre R$ 1.500 e R$ 2.500/mês",2],["Acima de R$ 2.500/mês",2]] }
+]},
+{ title:"9. Perguntas abertas",
+  desc:"Essas respostas deixam o diagnóstico muito mais preciso.",
+  qs:[
+  { type:"text", t:"Qual problema comercial mais incomoda hoje?", h:"Descreva com suas palavras." },
+  { type:"text", t:"Qual principal objetivo comercial da clínica nos próximos meses?", h:"Ex: aumentar agenda, recuperar clientes, organizar atendimento, melhorar vendas." },
+  { type:"text", t:"Existe algo importante que não foi perguntado?", h:"Equipe, rotina, dificuldade, contexto, volume ou urgência." }
+]}
+];
+
+/* ---------- renderização ---------- */
+const root = document.getElementById('form-sections');
+let qIndex = 0;
+const flatQs = [];
+SECTIONS.forEach(sec => {
+  const s = document.createElement('section');
+  s.className = 'section';
+  s.innerHTML = `<div class="sec-head"><h2>${sec.title}</h2><p>${sec.desc}</p></div>`;
+  sec.qs.forEach(q => {
+    qIndex++;
+    q.n = qIndex;
+    flatQs.push(q);
+    const card = document.createElement('div');
+    card.className = 'card';
+    card.dataset.n = qIndex;
+    let inner = `<div class="q-head"><span class="q-num">${qIndex}</span><span class="q-title">${q.t}</span></div>`;
+    if (q.h) inner += `<p class="q-hint">${q.h}</p>`;
+    if (q.type === 'check') inner += `<p class="q-multi">Pode marcar mais de uma opção</p>`;
+    if (q.type === 'text'){
+      inner += `<textarea class="ta" data-n="${qIndex}" rows="4"></textarea>`;
+    } else {
+      inner += `<div class="opts">` + q.opts.map((o,i) =>
+        `<label class="opt ${q.type==='check'?'check':''}">
+          <input type="${q.type==='check'?'checkbox':'radio'}" name="q${qIndex}" value="${o[0]}" data-s="${o[1]??0}" data-i="${i}">
+          <span class="mark"></span><span>${o[0]}</span>
+        </label>`).join('') + `</div>`;
+    }
+    card.innerHTML = inner;
+    s.appendChild(card);
+  });
+  root.appendChild(s);
+});
+
+/* ---------- interação e progresso ---------- */
+function refresh(){
+  let answered = 0;
+  flatQs.forEach(q => {
+    const card = document.querySelector(`.card[data-n="${q.n}"]`);
+    let ok = false;
+    if (q.type === 'text'){
+      ok = card.querySelector('textarea').value.trim().length > 0;
+    } else {
+      ok = !!card.querySelector('input:checked');
+    }
+    card.classList.toggle('done', ok);
+    if (ok) answered++;
+  });
+  document.getElementById('p-count').textContent = answered;
+  const pct = Math.round(answered / flatQs.length * 100);
+  document.getElementById('p-pct').textContent = pct + '%';
+  document.getElementById('p-fill').style.width = pct + '%';
+  return answered;
+}
+document.addEventListener('change', e => {
+  if (e.target.matches('.opt input')){
+    const group = e.target.closest('.card').querySelectorAll('.opt');
+    group.forEach(l => l.classList.toggle('sel', l.querySelector('input').checked));
+    refresh();
+  }
+});
+document.addEventListener('input', e => { if (e.target.matches('.ta')) refresh(); });
+
+/* ---------- pontuação e plano sugerido ----------
+   maturityScore: soma dos pontos das perguntas de uma opção (0–2 cada).
+   budget: índice da resposta de investimento.
+   Regra inicial (ajuste à vontade):
+   - Orçamento "Até R$297" → Start, salvo volume alto → Growth
+   - Orçamento "R$497–797" → Growth
+   - Orçamento "R$997+"   → Elite, salvo volume baixo → Growth
+*/
+function computeResult(){
+  let score = 0, max = 0, budgetIdx = null, volumeIdx = null;
+  flatQs.forEach(q => {
+    if (q.type !== 'radio') return;
+    const sel = document.querySelector(`input[name="q${q.n}"]:checked`);
+    max += 2;
+    if (!sel) return;
+    score += parseInt(sel.dataset.s || 0, 10);
+    if (q.budget) budgetIdx = parseInt(sel.dataset.i, 10);
+    if (q.n === 1) volumeIdx = parseInt(sel.dataset.i, 10);
+  });
+  let plan = 'Growth';
+  if (budgetIdx === 0) plan = (volumeIdx === 2) ? 'Growth' : 'Start';
+  else if (budgetIdx === 1) plan = 'Growth';
+  else if (budgetIdx !== null) plan = (volumeIdx === 0) ? 'Growth' : 'Elite';
+  return { score, maxScore: max, budgetIdx, plan };
+}
+
+/* ---------- UTM ---------- */
+function getUtm(){
+  const p = new URLSearchParams(location.search), utm = {};
+  ['utm_source','utm_medium','utm_campaign','utm_content','utm_term'].forEach(k => {
+    if (p.get(k)) utm[k] = p.get(k);
+  });
+  return utm;
+}
+
+/* ---------- envio ---------- */
+const btn = document.getElementById('btn-send');
+btn.addEventListener('click', async () => {
+  const required = [['f-clinica','nome da clínica'],['f-resp','responsável'],['f-whats','WhatsApp']];
+  for (const [id,label] of required){
+    const el = document.getElementById(id);
+    if (!el.value.trim()){
+      el.focus(); el.style.borderColor = '#B0542F';
+      document.getElementById('pending').style.display = 'block';
+      document.getElementById('pending').textContent = `Preencha o campo obrigatório: ${label}.`;
+      return;
+    }
+  }
+  const answered = refresh();
+  if (answered < flatQs.length){
+    const first = document.querySelector('.card:not(.done)');
+    document.getElementById('pending').style.display = 'block';
+    document.getElementById('pending').textContent = `Faltam ${flatQs.length - answered} etapas. Levamos você até a próxima pendente.`;
+    if (first) first.scrollIntoView({behavior:'smooth', block:'center'});
+    return;
+  }
+  document.getElementById('pending').style.display = 'none';
+
+  const answers = flatQs.map(q => {
+    let value;
+    if (q.type === 'text') value = document.querySelector(`.ta[data-n="${q.n}"]`).value.trim();
+    else if (q.type === 'check') value = [...document.querySelectorAll(`input[name="q${q.n}"]:checked`)].map(i => i.value);
+    else { const s = document.querySelector(`input[name="q${q.n}"]:checked`); value = s ? s.value : null; }
+    return { n: q.n, question: q.t, value };
+  });
+  const result = computeResult();
+
+  const payload = {
+    clinica: document.getElementById('f-clinica').value.trim(),
+    responsavel: document.getElementById('f-resp').value.trim(),
+    whatsapp: document.getElementById('f-whats').value.trim(),
+    instagram: document.getElementById('f-insta').value.trim(),
+    cidade: document.getElementById('f-cidade').value.trim(),
+    site: document.getElementById('f-site').value.trim(),
+    score: result.score,
+    max_score: result.maxScore,
+    budget_index: result.budgetIdx,
+    plano_sugerido: result.plan,
+    utm: getUtm(),
+    respostas: answers
+  };
+
+  btn.disabled = true; btn.textContent = 'Enviando…';
+  document.getElementById('msg-ok').classList.remove('ok');
+  document.getElementById('msg-err').classList.remove('err');
+  try{
+    const r = await fetch(`${SUPABASE_URL}/rest/v1/dx_diagnosticos`, {
+      method:'POST',
+      headers:{
+        'Content-Type':'application/json',
+        'apikey': SUPABASE_ANON_KEY,
+        'Authorization': `Bearer ${SUPABASE_ANON_KEY}`,
+        'Prefer':'return=minimal'
+      },
+      body: JSON.stringify(payload)
+    });
+    if (!r.ok) throw new Error('HTTP ' + r.status);
+    document.getElementById('msg-ok').classList.add('ok');
+    btn.textContent = 'Diagnóstico enviado';
+  } catch(err){
+    console.error(err);
+    document.getElementById('msg-err').classList.add('err');
+    btn.disabled = false; btn.textContent = 'Enviar diagnóstico';
+  }
+});
+
+refresh();
+</script>
+</body>
+</html>
