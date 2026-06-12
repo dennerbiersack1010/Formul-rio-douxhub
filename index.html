@@ -89,6 +89,8 @@ main{padding:50px 0 90px}
   transition:background .3s ease,color .3s ease;
 }
 .card.done .q-num{background:var(--gold);border-color:var(--gold);color:#1B1505}
+.card.missing{border-color:#B0542F;box-shadow:0 0 0 3px rgba(176,84,47,.14)}
+.card.missing .q-num{border-color:#B0542F;color:#B0542F}
 .q-title{font-weight:500;font-size:.99rem;line-height:1.45;padding-top:3px}
 .q-hint{font-size:.8rem;color:var(--ink-soft);margin:2px 0 16px 44px}
 .q-multi{font-size:.7rem;letter-spacing:.12em;text-transform:uppercase;color:var(--gold-deep);margin:0 0 12px 44px}
@@ -146,7 +148,7 @@ main{padding:50px 0 90px}
 .btn:disabled{opacity:.55;cursor:wait;transform:none}
 .send .safe{font-size:.74rem;color:var(--ink-soft);margin-top:16px}
 .msg{display:none;margin-top:22px;border-radius:12px;padding:18px 20px;font-size:.9rem;text-align:left}
-.msg.ok{display:block;background:var(--gold-pale);border:1px solid var(--line-gold)}
+.msg.ok{display:block;background:#E9F3E6;border:1px solid rgba(58,125,68,.4);color:#2C5631}
 .msg.err{display:block;background:#F6E8E4;border:1px solid rgba(160,60,40,.3);color:#6B3322}
 .msg b{font-weight:600}
 .pending{font-size:.8rem;color:#8A5A2B;margin-top:14px;display:none}
@@ -411,20 +413,28 @@ function refresh(){
 }
 document.addEventListener('change', e => {
   if (e.target.matches('.opt input')){
-    const group = e.target.closest('.card').querySelectorAll('.opt');
+    const card = e.target.closest('.card');
+    card.classList.remove('missing');
+    const group = card.querySelectorAll('.opt');
     group.forEach(l => l.classList.toggle('sel', l.querySelector('input').checked));
     refresh();
   }
 });
-document.addEventListener('input', e => { if (e.target.matches('.ta')) refresh(); });
+document.addEventListener('input', e => {
+  if (e.target.matches('.ta')){
+    e.target.closest('.card').classList.remove('missing');
+    refresh();
+  }
+  if (e.target.matches('.field input')) e.target.style.borderColor = '';
+});
 
 /* ---------- pontuação e plano sugerido ----------
    maturityScore: soma dos pontos das perguntas de uma opção (0–2 cada).
    budget: índice da resposta de investimento.
    Regra inicial (ajuste à vontade):
-   - Orçamento "Até R$297" → Start, salvo volume alto → Growth
-   - Orçamento "R$497–797" → Growth
-   - Orçamento "R$997+"   → Elite, salvo volume baixo → Growth
+   - "Até R$197"      → Start, salvo volume alto → Growth
+   - "R$297"          → Growth
+   - "R$497–697" ou + → Elite, salvo volume baixo → Growth
 */
 function computeResult(){
   let score = 0, max = 0, budgetIdx = null, volumeIdx = null;
@@ -456,21 +466,42 @@ function getUtm(){
 /* ---------- envio ---------- */
 const btn = document.getElementById('btn-send');
 btn.addEventListener('click', async () => {
+  /* campos obrigatórios da clínica: destaca todos os vazios em vermelho */
   const required = [['f-clinica','nome da clínica'],['f-resp','responsável'],['f-whats','WhatsApp']];
-  for (const [id,label] of required){
+  let firstEmpty = null;
+  for (const [id] of required){
     const el = document.getElementById(id);
-    if (!el.value.trim()){
-      el.focus(); el.style.borderColor = '#B0542F';
-      document.getElementById('pending').style.display = 'block';
-      document.getElementById('pending').textContent = `Preencha o campo obrigatório: ${label}.`;
-      return;
-    }
+    const empty = !el.value.trim();
+    el.style.borderColor = empty ? '#B0542F' : '';
+    if (empty && !firstEmpty) firstEmpty = el;
   }
-  const answered = refresh();
-  if (answered < flatQs.length){
-    const first = document.querySelector('.card[data-n]:not(.done)');
+  if (firstEmpty){
     document.getElementById('pending').style.display = 'block';
-    document.getElementById('pending').textContent = `Faltam ${flatQs.length - answered} etapas. Levamos você até a próxima pendente.`;
+    document.getElementById('pending').textContent = 'Preencha os dados da clínica destacados em vermelho no início da página.';
+    firstEmpty.scrollIntoView({behavior:'smooth', block:'center'});
+    firstEmpty.focus();
+    return;
+  }
+
+  /* todas as 34 etapas são obrigatórias (incluindo as perguntas abertas) */
+  refresh();
+  document.querySelectorAll('.card.missing').forEach(c => c.classList.remove('missing'));
+  const pendentes = flatQs.filter(q => {
+    if (q.type === 'text'){
+      return !document.querySelector(`.ta[data-n="${q.n}"]`).value.trim();
+    }
+    return !document.querySelector(`input[name="q${q.n}"]:checked`);
+  });
+  if (pendentes.length){
+    pendentes.forEach(q => {
+      const c = document.querySelector(`.card[data-n="${q.n}"]`);
+      if (c) c.classList.add('missing');
+    });
+    const first = document.querySelector(`.card[data-n="${pendentes[0].n}"]`);
+    document.getElementById('pending').style.display = 'block';
+    document.getElementById('pending').textContent = pendentes.length === 1
+      ? `Falta responder a pergunta ${pendentes[0].n} — destacada em vermelho para você.`
+      : `Faltam ${pendentes.length} perguntas. A primeira é a nº ${pendentes[0].n}, destacada em vermelho para você.`;
     if (first) first.scrollIntoView({behavior:'smooth', block:'center'});
     return;
   }
