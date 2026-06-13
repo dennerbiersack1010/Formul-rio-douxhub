@@ -199,7 +199,7 @@ src="https://www.facebook.com/tr?id=36235388052773433&ev=PageView&noscript=1"/><
     <h1>Onde sua clínica está deixando <em>faturamento parado?</em></h1>
     <p class="sub">Este diagnóstico mapeia aquisição, atendimento, qualificação, agenda, follow-up, orçamentos, reativação e maturidade comercial. Ao final, suas respostas geram uma pontuação — e o plano indicado chega no seu WhatsApp.</p>
     <div class="top-stats">
-      <div class="st"><div class="v">34</div><div class="l">etapas</div></div>
+      <div class="st"><div class="v">33</div><div class="l">etapas</div></div>
       <div class="st"><div class="v">9</div><div class="l">blocos</div></div>
       <div class="st"><div class="v">1</div><div class="l">leitura</div></div>
     </div>
@@ -208,7 +208,7 @@ src="https://www.facebook.com/tr?id=36235388052773433&ev=PageView&noscript=1"/><
 
 <div class="progress">
   <div class="p-in">
-    <div class="p-line"><span><b id="p-count">0</b> de 34 etapas respondidas</span><span id="p-pct">0%</span></div>
+    <div class="p-line"><span><b id="p-count">0</b> de <b id="p-total">33</b> etapas respondidas</span><span id="p-pct">0%</span></div>
     <div class="p-track"><div class="p-fill" id="p-fill"></div></div>
   </div>
 </div>
@@ -262,7 +262,7 @@ src="https://www.facebook.com/tr?id=36235388052773433&ev=PageView&noscript=1"/><
    - anon public  → SUPABASE_ANON_KEY
 ===================================================== */
 const SUPABASE_URL = "https://cmyxfytsumyyrbrgqggk.supabase.co";
-const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImNteXhmeXRzdW15eXJicmdxZ2drIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODA4NTgxNjEsImV4cCI6MjA5NjQzNDE2MX0.EYAl6ztpVBIBcxxO_hPAetAn3cpqccOBrycgWqUB9Eg";
+const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJIUzI1NiIsInJlZiI6ImNteXhmeXRzdW15eXJicmdxZ2drIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODA4NTgxNjEsImV4cCI6MjA5NjQzNDE2MX0.EYAl6ztpVBIBcxxO_hPAetAn3cpqccOBrycgWqUB9Eg";
 
 /* =====================================================
    PERGUNTAS
@@ -351,7 +351,7 @@ const SECTIONS = [
     opts:[["Não, a equipe vive sobrecarregada",0],["Consegue, mas no limite",1],["Sim, conseguimos acompanhar bem",2]] }
 ]},
 { title:"8. Gargalo, urgência e decisão",
-  desc:"Por fim, entendemos a dor principal e a capacidade de avançar.",
+  desc:"Por fim, entendemos a dor principal, o impacto no faturamento e o momento da clínica.",
   qs:[
   { type:"radio", t:"Qual é o principal gargalo hoje?", h:"O ponto que mais atrapalha vender melhor.",
     opts:[["Responder e organizar contatos",0],["Transformar interesse em agendamento",1],["Fechar vendas e recuperar quem sumiu",2]] },
@@ -360,10 +360,7 @@ const SECTIONS = [
   { type:"radio", t:"O quanto esse problema impacta o faturamento?", h:"Na percepção da clínica.",
     opts:[["Impacta pouco",0],["Impacta de forma moderada",1],["Impacta bastante",2]] },
   { type:"radio", t:"Qual seria o momento para resolver isso?", h:"Urgência e prontidão.",
-    opts:[["Precisamos disso agora",2],["Faz sentido avaliar em breve",1],["Não é prioridade no momento",0]] },
-  { type:"radio", t:"Qual faixa mensal faria sentido investir para organizar, acompanhar e recuperar oportunidades comerciais?", h:"Não é contratação automática. É apenas para entender se a solução indicada cabe no momento da clínica.",
-    budget:true,
-    opts:[["Até R$ 197/mês",0],["Em torno de R$ 297/mês",1],["Entre R$ 497 e R$ 697/mês",2],["Acima de R$ 697/mês",2]] }
+    opts:[["Precisamos disso agora",2],["Faz sentido avaliar em breve",1],["Não é prioridade no momento",0]] }
 ]},
 { title:"9. Perguntas abertas",
   desc:"Essas respostas deixam o diagnóstico muito mais preciso.",
@@ -407,6 +404,8 @@ SECTIONS.forEach(sec => {
   root.appendChild(s);
 });
 
+document.getElementById('p-total').textContent = flatQs.length;
+
 /* ---------- interação e progresso ---------- */
 function refresh(){
   let answered = 0;
@@ -445,29 +444,138 @@ document.addEventListener('input', e => {
 });
 
 /* ---------- pontuação e plano sugerido ----------
-   maturityScore: soma dos pontos das perguntas de uma opção (0–2 cada).
-   budget: índice da resposta de investimento.
-   Regra inicial (ajuste à vontade):
-   - "Até R$197"      → Start, salvo volume alto → Growth
-   - "R$297"          → Growth
-   - "R$497–697" ou + → Elite, salvo volume baixo → Growth
+   A indicação do plano NÃO usa faixa de mensalidade.
+   Ela considera cenário da clínica: volume, aquisição, canais, gargalos,
+   follow-up, reativação, equipe, ferramentas, urgência e impacto percebido.
+
+   score: maturidade comercial geral.
+   plan: plano indicado por complexidade/necessidade operacional.
 */
+function selectedRadioIndex(n){
+  const sel = document.querySelector(`input[name="q${n}"]:checked`);
+  return sel ? parseInt(sel.dataset.i, 10) : null;
+}
+function selectedRadioScore(n){
+  const sel = document.querySelector(`input[name="q${n}"]:checked`);
+  return sel ? parseInt(sel.dataset.s || 0, 10) : 0;
+}
+function checkedValues(n){
+  return [...document.querySelectorAll(`input[name="q${n}"]:checked`)].map(i => i.value);
+}
+function hasChecked(n, text){
+  return checkedValues(n).some(v => v.toLowerCase().includes(text.toLowerCase()));
+}
 function computeResult(){
-  let score = 0, max = 0, budgetIdx = null, volumeIdx = null;
+  let score = 0, max = 0;
   flatQs.forEach(q => {
     if (q.type !== 'radio') return;
     const sel = document.querySelector(`input[name="q${q.n}"]:checked`);
     max += 2;
-    if (!sel) return;
-    score += parseInt(sel.dataset.s || 0, 10);
-    if (q.budget) budgetIdx = parseInt(sel.dataset.i, 10);
-    if (q.n === 1) volumeIdx = parseInt(sel.dataset.i, 10);
+    if (sel) score += parseInt(sel.dataset.s || 0, 10);
   });
-  let plan = 'Growth';
-  if (budgetIdx === 0) plan = (volumeIdx === 2) ? 'Growth' : 'Start';
-  else if (budgetIdx === 1) plan = 'Growth';
-  else if (budgetIdx !== null) plan = (volumeIdx === 0) ? 'Growth' : 'Elite';
-  return { score, maxScore: max, budgetIdx, plan };
+
+  let complexity = 0;
+
+  const volumeIdx = selectedRadioIndex(1);         // volume de contatos
+  const canalPrincipalIdx = selectedRadioIndex(3); // canal principal
+  const origemScore = selectedRadioScore(5);       // clareza da origem
+  const organizacaoScore = selectedRadioScore(6);  // organização dos contatos
+  const followScore = selectedRadioScore(16);      // orçamento sem fechamento
+  const tentativasScore = selectedRadioScore(17);  // tentativas de follow-up
+  const inativosScore = selectedRadioScore(20);    // clientes inativos
+  const reativacaoScore = selectedRadioScore(21);  // reativação
+  const equipeIdx = selectedRadioIndex(25);        // quem cuida dos contatos
+  const capacidadeScore = selectedRadioScore(26);  // capacidade da equipe
+  const gargaloIdx = selectedRadioIndex(27);       // gargalo principal
+  const dificuldadeIdx = selectedRadioIndex(28);   // dificuldade central
+  const impactoIdx = selectedRadioIndex(29);       // impacto no faturamento
+  const urgenciaIdx = selectedRadioIndex(30);      // momento para resolver
+
+  if (volumeIdx === 2) complexity += 3;
+  else if (volumeIdx === 1) complexity += 2;
+  else complexity += 1;
+
+  if (canalPrincipalIdx === 2) complexity += 2;
+  if (hasChecked(2, 'Anúncios')) complexity += 2;
+  if (hasChecked(2, 'Site')) complexity += 1;
+
+  if (origemScore === 0) complexity += 2;
+  else if (origemScore === 1) complexity += 1;
+
+  if (organizacaoScore === 0) complexity += 2;
+  else if (organizacaoScore === 1) complexity += 1;
+
+  const problemasAtendimento = checkedValues(9).filter(v => !v.includes('Não vejo')).length;
+  complexity += Math.min(problemasAtendimento, 3);
+
+  if (followScore === 0) complexity += 2;
+  else if (followScore === 1) complexity += 1;
+
+  if (tentativasScore === 0) complexity += 2;
+  else if (tentativasScore === 1) complexity += 1;
+
+  const motivosNaoFecha = checkedValues(18).filter(v => !v.includes('Não sabemos')).length;
+  if (motivosNaoFecha >= 3) complexity += 2;
+  else if (motivosNaoFecha >= 1) complexity += 1;
+
+  if (hasChecked(19, 'Não retomamos')) complexity += 2;
+
+  if (inativosScore === 0) complexity += 2;
+  else if (inativosScore === 1) complexity += 1;
+
+  if (reativacaoScore === 0) complexity += 2;
+  else if (reativacaoScore === 1) complexity += 1;
+
+  if (hasChecked(22, 'Não sabemos')) complexity += 1;
+
+  if (hasChecked(23, 'Nenhuma')) complexity += 2;
+  else if (checkedValues(23).length <= 2) complexity += 1;
+
+  if (hasChecked(24, 'Nenhuma')) complexity += 2;
+  else if (!hasChecked(24, 'CRM') && !hasChecked(24, 'Automação')) complexity += 1;
+
+  if (equipeIdx === 2) complexity += 2;
+  else if (equipeIdx === 1) complexity += 1;
+
+  if (capacidadeScore === 0) complexity += 2;
+  else if (capacidadeScore === 1) complexity += 1;
+
+  if (gargaloIdx === 2) complexity += 2;
+  else if (gargaloIdx === 1) complexity += 1;
+
+  if (dificuldadeIdx === 2) complexity += 2;
+  else if (dificuldadeIdx === 1) complexity += 1;
+
+  if (impactoIdx === 2) complexity += 2;
+  else if (impactoIdx === 1) complexity += 1;
+
+  if (urgenciaIdx === 0) complexity += 2;
+  else if (urgenciaIdx === 1) complexity += 1;
+
+  let plan = 'Start';
+
+  if (
+    complexity >= 24 ||
+    (volumeIdx === 2 && impactoIdx === 2) ||
+    (volumeIdx === 2 && urgenciaIdx === 0) ||
+    (equipeIdx === 2 && dificuldadeIdx === 2) ||
+    (hasChecked(2, 'Anúncios') && dificuldadeIdx === 2 && impactoIdx === 2)
+  ) {
+    plan = 'Elite';
+  } else if (
+    complexity >= 13 ||
+    volumeIdx === 1 ||
+    volumeIdx === 2 ||
+    hasChecked(2, 'Anúncios') ||
+    impactoIdx === 1 ||
+    impactoIdx === 2 ||
+    dificuldadeIdx === 1 ||
+    dificuldadeIdx === 2
+  ) {
+    plan = 'Growth';
+  }
+
+  return { score, maxScore: max, plan };
 }
 
 /* ---------- UTM ---------- */
@@ -499,7 +607,7 @@ btn.addEventListener('click', async () => {
     return;
   }
 
-  /* todas as 34 etapas são obrigatórias (incluindo as perguntas abertas) */
+  /* todas as etapas são obrigatórias, incluindo as perguntas abertas */
   refresh();
   document.querySelectorAll('.card.missing').forEach(c => c.classList.remove('missing'));
   const pendentes = flatQs.filter(q => {
@@ -541,7 +649,7 @@ btn.addEventListener('click', async () => {
     site: document.getElementById('f-site').value.trim(),
     score: result.score,
     max_score: result.maxScore,
-    budget_index: result.budgetIdx,
+    budget_index: null,
     plano_sugerido: result.plan,
     utm: getUtm(),
     respostas: answers
