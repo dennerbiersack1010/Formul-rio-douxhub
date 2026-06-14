@@ -3,169 +3,128 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
-<title>DouxHub — Diagnóstico de Visão Comercial para Clínicas</title>
-<meta name="description" content="Diagnóstico comercial da DouxHub: descubra onde sua clínica está deixando faturamento parado. Você recebe o plano indicado no seu WhatsApp.">
+<title>DouxHub — Descubra quanto sua clínica está deixando parado</title>
+<meta name="description" content="Responda algumas perguntas sobre a sua clínica e receba no WhatsApp a leitura de onde existe faturamento parado, com o plano indicado para a sua operação.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400&family=Sora:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;1,400&family=Sora:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
 :root{
-  --pearl:#F7F6F2;
-  --white:#FFFFFF;
-  --ink:#15110A;
-  --ink-soft:#4A4435;
-  --gold:#C9A84C;
-  --gold-deep:#A8893A;
-  --gold-pale:#F1E7CC;
-  --line:rgba(21,17,10,.12);
-  --line-gold:rgba(201,168,76,.35);
-  --radius:18px;
-  --max:860px;
+  --pearl:#F7F6F2; --white:#FFFFFF; --ink:#15110A; --ink-soft:#4A4435;
+  --gold:#C9A84C; --gold-deep:#A8893A; --gold-pale:#F1E7CC;
+  --line:rgba(21,17,10,.12); --line-gold:rgba(201,168,76,.35);
+  --red:#B0542F; --green:#2C5631;
 }
 *{margin:0;padding:0;box-sizing:border-box}
 html{scroll-behavior:smooth}
 body{
-  font-family:'Sora',sans-serif;font-weight:300;
-  background:var(--pearl);color:var(--ink);line-height:1.65;
-  -webkit-font-smoothing:antialiased;
+  font-family:'Sora',sans-serif;font-weight:300;background:var(--pearl);color:var(--ink);
+  line-height:1.6;-webkit-font-smoothing:antialiased;min-height:100dvh;
+  display:flex;flex-direction:column;
 }
-.wrap{max-width:var(--max);margin:0 auto;padding:0 22px}
-h1,h2,h3{font-family:'Playfair Display',serif;font-weight:500;line-height:1.15;letter-spacing:-.01em}
-.eyebrow{
-  font-family:'Sora',sans-serif;font-size:.7rem;font-weight:600;
-  letter-spacing:.22em;text-transform:uppercase;color:var(--gold-deep);
-  display:inline-flex;align-items:center;gap:14px;margin-bottom:18px;
-}
-.eyebrow::before{content:"";width:30px;height:1px;background:var(--gold)}
+h1,h2{font-family:'Playfair Display',serif;font-weight:600;line-height:1.18;letter-spacing:-.01em}
 
-/* ---------- topo ---------- */
-header.top{
-  background:
-    radial-gradient(800px 420px at 88% 0%, rgba(201,168,76,.16), transparent 60%),
-    linear-gradient(115deg,#FDFCFA 0%,var(--pearl) 50%,#ECE9E0 100%);
-  border-bottom:1px solid var(--line);
-  padding:54px 0 46px;
-}
-.brand{display:flex;align-items:center;gap:12px;margin-bottom:34px}
-.brand .dot{width:10px;height:10px;border-radius:50%;background:var(--gold)}
-.brand .name{font-family:'Playfair Display',serif;font-size:1.25rem;font-weight:600}
-.brand .name span{color:var(--gold-deep)}
-.brand .tag{font-size:.72rem;color:var(--ink-soft)}
-header.top h1{font-size:clamp(1.8rem,4.6vw,2.7rem);max-width:640px;margin-bottom:14px}
-header.top h1 em{font-style:italic;color:var(--gold-deep)}
-header.top p.sub{color:var(--ink-soft);max-width:560px;font-size:.96rem}
-.top-stats{display:flex;gap:34px;margin-top:30px;flex-wrap:wrap}
-.top-stats .st .v{font-family:'Playfair Display',serif;font-size:1.7rem;color:var(--gold-deep);line-height:1}
-.top-stats .st .l{font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-soft);margin-top:4px}
-
-/* ---------- progresso ---------- */
-.progress{
-  position:sticky;top:0;z-index:40;background:rgba(247,246,242,.92);
+/* topo enxuto */
+.bar{
+  position:sticky;top:0;z-index:30;background:rgba(247,246,242,.94);
   backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);
-  border-bottom:1px solid var(--line);padding:12px 0;
+  border-bottom:1px solid var(--line);
+  padding:calc(env(safe-area-inset-top) + 14px) 20px 14px;
 }
-.progress .p-in{max-width:var(--max);margin:0 auto;padding:0 22px}
-.progress .p-line{display:flex;justify-content:space-between;font-size:.74rem;color:var(--ink-soft);margin-bottom:7px}
-.progress .p-line b{color:var(--gold-deep);font-weight:600}
-.p-track{height:5px;border-radius:100px;background:rgba(21,17,10,.08);overflow:hidden}
-.p-fill{height:100%;width:0;border-radius:100px;background:linear-gradient(90deg,#D8BC6B,var(--gold-deep));transition:width .4s ease}
+.bar-in{max-width:560px;margin:0 auto;display:flex;align-items:center;gap:12px}
+.brand{display:flex;align-items:center;gap:9px;flex:none}
+.brand .dot{width:9px;height:9px;border-radius:50%;background:var(--gold)}
+.brand .nm{font-family:'Playfair Display',serif;font-weight:600;font-size:1.05rem}
+.brand .nm span{color:var(--gold-deep)}
+.ptrack{flex:1;height:5px;border-radius:100px;background:rgba(21,17,10,.09);overflow:hidden}
+.pfill{height:100%;width:0;border-radius:100px;background:linear-gradient(90deg,#D8BC6B,var(--gold-deep));transition:width .45s cubic-bezier(.22,1,.36,1)}
 
-/* ---------- form ---------- */
-main{padding:50px 0 90px}
-.section{margin-bottom:54px}
-.sec-head{margin-bottom:26px}
-.sec-head h2{font-size:1.45rem;margin-bottom:6px}
-.sec-head p{font-size:.88rem;color:var(--ink-soft);max-width:560px}
-
+/* palco */
+.stage{flex:1;display:flex;align-items:flex-start;justify-content:center;padding:30px 20px 60px}
 .card{
-  background:var(--white);border:1px solid var(--line);border-radius:var(--radius);
-  padding:26px 26px 28px;margin-bottom:18px;
+  width:100%;max-width:560px;background:var(--white);
+  border:1px solid var(--line);border-radius:20px;
+  padding:34px 26px 30px;box-shadow:0 18px 50px rgba(21,17,10,.06);
 }
-.q-head{display:flex;gap:14px;margin-bottom:6px}
-.q-num{
-  flex:none;width:30px;height:30px;border-radius:50%;
-  border:1px solid var(--line-gold);color:var(--gold-deep);
-  font-size:.74rem;font-weight:600;display:flex;align-items:center;justify-content:center;
-  transition:background .3s ease,color .3s ease;
-}
-.card.done .q-num{background:var(--gold);border-color:var(--gold);color:#1B1505}
-.card.missing{border-color:#B0542F;box-shadow:0 0 0 3px rgba(176,84,47,.14)}
-.card.missing .q-num{border-color:#B0542F;color:#B0542F}
-.q-title{font-weight:500;font-size:.99rem;line-height:1.45;padding-top:3px}
-.q-hint{font-size:.8rem;color:var(--ink-soft);margin:2px 0 16px 44px}
-.q-multi{font-size:.7rem;letter-spacing:.12em;text-transform:uppercase;color:var(--gold-deep);margin:0 0 12px 44px}
+.step{display:none}
+.step.on{display:block;animation:slide .4s cubic-bezier(.22,1,.36,1)}
+@keyframes slide{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
 
-.opts{display:flex;flex-direction:column;gap:10px;margin-left:44px}
+.kicker{
+  font-size:.66rem;font-weight:600;letter-spacing:.2em;text-transform:uppercase;
+  color:var(--gold-deep);margin-bottom:14px;display:flex;align-items:center;gap:10px;
+}
+.kicker::before{content:"";width:24px;height:1px;background:var(--gold)}
+.q{font-size:clamp(1.4rem,5.5vw,1.85rem);margin-bottom:8px}
+.hint{font-size:.9rem;color:var(--ink-soft);margin-bottom:24px}
+
+/* opções */
+.opts{display:flex;flex-direction:column;gap:11px}
 .opt{
-  display:flex;align-items:flex-start;gap:12px;cursor:pointer;
-  border:1px solid var(--line);border-radius:12px;padding:13px 16px;
-  font-size:.91rem;transition:border-color .25s ease,background .25s ease;
+  display:flex;align-items:center;gap:13px;cursor:pointer;
+  border:1px solid var(--line);border-radius:14px;padding:16px 18px;
+  font-size:.98rem;transition:border-color .2s ease,background .2s ease,transform .1s ease;
   background:var(--pearl);
 }
-.opt:hover{border-color:var(--line-gold)}
-.opt input{position:absolute;opacity:0;pointer-events:none}
-.opt .mark{
-  flex:none;width:18px;height:18px;margin-top:2px;border-radius:50%;
+.opt:active{transform:scale(.99)}
+.opt .mk{
+  flex:none;width:20px;height:20px;border-radius:50%;
   border:1.5px solid rgba(21,17,10,.3);position:relative;transition:border-color .2s ease;
 }
-.opt.check .mark{border-radius:5px}
-.opt .mark::after{
-  content:"";position:absolute;inset:3px;border-radius:50%;
-  background:var(--gold-deep);opacity:0;transition:opacity .2s ease;
-}
-.opt.check .mark::after{border-radius:2px}
+.opt .mk::after{content:"";position:absolute;inset:4px;border-radius:50%;background:var(--gold-deep);opacity:0;transition:opacity .2s ease}
 .opt.sel{border-color:var(--gold);background:var(--gold-pale)}
-.opt.sel .mark{border-color:var(--gold-deep)}
-.opt.sel .mark::after{opacity:1}
+.opt.sel .mk{border-color:var(--gold-deep)}
+.opt.sel .mk::after{opacity:1}
 
-.fields{display:grid;grid-template-columns:1fr 1fr;gap:16px}
-.field{display:flex;flex-direction:column;gap:7px}
-.field label{font-size:.8rem;font-weight:500}
+/* campos */
+.fields{display:flex;flex-direction:column;gap:16px}
+.field label{display:block;font-size:.82rem;font-weight:500;margin-bottom:7px}
 .field label .req{color:var(--gold-deep)}
-.field input,.field textarea,.ta{
-  font-family:'Sora',sans-serif;font-size:16px;font-weight:300;color:var(--ink);
+.field input{
+  width:100%;font-family:'Sora',sans-serif;font-size:16px;font-weight:300;color:var(--ink);
   background:var(--pearl);border:1px solid var(--line);border-radius:12px;
-  padding:13px 15px;outline:none;transition:border-color .25s ease;width:100%;
+  padding:14px 15px;outline:none;transition:border-color .2s ease;
 }
-.field input:focus,.field textarea:focus,.ta:focus{border-color:var(--gold)}
-.ta{margin-left:44px;width:calc(100% - 44px);min-height:96px;resize:vertical}
+.field input:focus{border-color:var(--gold)}
+.field input.bad{border-color:var(--red)}
 
-/* ---------- envio ---------- */
-.send{
-  background:var(--white);border:1px solid var(--line-gold);border-radius:var(--radius);
-  padding:40px 30px;text-align:center;
-}
-.send h2{font-size:1.5rem;margin-bottom:10px}
-.send p{font-size:.9rem;color:var(--ink-soft);max-width:520px;margin:0 auto 26px}
+/* navegação */
+.nav{display:flex;gap:12px;margin-top:28px;align-items:center}
 .btn{
-  display:inline-block;font-family:'Sora',sans-serif;font-weight:500;font-size:.95rem;
-  padding:17px 40px;border-radius:100px;border:none;cursor:pointer;
-  background:linear-gradient(135deg,#D8BC6B 0%,var(--gold) 45%,var(--gold-deep) 100%);
-  color:#1B1505;box-shadow:0 10px 28px rgba(201,168,76,.35);
-  transition:transform .25s ease,box-shadow .25s ease,opacity .25s ease;
+  font-family:'Sora',sans-serif;font-weight:500;font-size:.98rem;border:none;cursor:pointer;
+  padding:16px 30px;border-radius:100px;transition:transform .2s ease,box-shadow .2s ease,opacity .2s ease;
 }
-.btn:hover{transform:translateY(-2px);box-shadow:0 16px 36px rgba(201,168,76,.45)}
-.btn:disabled{opacity:.55;cursor:wait;transform:none}
-.send .safe{font-size:.74rem;color:var(--ink-soft);margin-top:16px}
-.msg{display:none;margin-top:22px;border-radius:12px;padding:18px 20px;font-size:.9rem;text-align:left}
-.msg.ok{display:block;background:#E9F3E6;border:1px solid rgba(58,125,68,.4);color:#2C5631}
-.msg.err{display:block;background:#F6E8E4;border:1px solid rgba(160,60,40,.3);color:#6B3322}
-.msg b{font-weight:600}
-.pending{font-size:.8rem;color:#8A5A2B;margin-top:14px;display:none}
+.btn-gold{
+  flex:1;background:linear-gradient(135deg,#D8BC6B 0%,var(--gold) 45%,var(--gold-deep) 100%);
+  color:#1B1505;box-shadow:0 10px 26px rgba(201,168,76,.32);
+}
+.btn-gold:active{transform:translateY(1px)}
+.btn-gold:disabled{opacity:.55;cursor:wait}
+.btn-back{
+  background:none;border:1px solid var(--line);color:var(--ink-soft);padding:16px 22px;
+}
+.alert{font-size:.82rem;color:var(--red);margin-top:14px;display:none}
 
-footer{border-top:1px solid var(--line);padding:26px 0;font-size:.76rem;color:var(--ink-soft);text-align:center}
+/* tela final */
+.done{text-align:center}
+.done .ring{
+  width:70px;height:70px;border-radius:50%;margin:0 auto 22px;
+  background:linear-gradient(135deg,#D8BC6B,var(--gold-deep));
+  display:flex;align-items:center;justify-content:center;
+  box-shadow:0 14px 34px rgba(201,168,76,.4);
+}
+.done .ring svg{width:32px;height:32px}
+.done h2{font-size:1.7rem;margin-bottom:12px}
+.done p{font-size:.96rem;color:var(--ink-soft);max-width:420px;margin:0 auto}
+.done .plan-pill{
+  display:inline-block;margin-top:22px;border:1px solid var(--line-gold);
+  background:var(--gold-pale);border-radius:100px;padding:11px 22px;
+  font-size:.86rem;color:var(--ink);
+}
+.done .plan-pill b{color:var(--gold-deep);font-weight:600}
 
-@media (max-width:640px){
-  .fields{grid-template-columns:1fr}
-  .opts,.q-hint,.q-multi{margin-left:0}
-  .ta{margin-left:0;width:100%}
-  .card{padding:22px 18px}
-  header.top{padding:42px 0 38px}
-}
-@media (prefers-reduced-motion: reduce){
-  *{transition:none!important}
-  html{scroll-behavior:auto}
-}
+.foot{text-align:center;padding:22px;font-size:.74rem;color:var(--ink-soft)}
+@media (prefers-reduced-motion: reduce){*{transition:none!important;animation:none!important}}
 </style>
 <!-- Meta Pixel -->
 <script>
@@ -186,389 +145,196 @@ src="https://www.facebook.com/tr?id=36235388052773433&ev=PageView&noscript=1"/><
 </head>
 <body>
 
-<header class="top">
-  <div class="wrap">
-    <div class="brand">
-      <span class="dot"></span>
-      <div>
-        <div class="name">Doux<span>Hub</span></div>
-        <div class="tag">Diagnóstico de visão comercial</div>
-      </div>
-    </div>
-    <span class="eyebrow">Análise estratégica da operação</span>
-    <h1>Onde sua clínica está deixando <em>faturamento parado?</em></h1>
-    <p class="sub">Este diagnóstico mapeia aquisição, atendimento, qualificação, agenda, follow-up, orçamentos, reativação e maturidade comercial. Ao final, suas respostas geram uma pontuação — e o plano indicado chega no seu WhatsApp.</p>
-    <div class="top-stats">
-      <div class="st"><div class="v">33</div><div class="l">etapas</div></div>
-      <div class="st"><div class="v">9</div><div class="l">blocos</div></div>
-      <div class="st"><div class="v">1</div><div class="l">leitura</div></div>
-    </div>
-  </div>
-</header>
-
-<div class="progress">
-  <div class="p-in">
-    <div class="p-line"><span><b id="p-count">0</b> de <b id="p-total">33</b> etapas respondidas</span><span id="p-pct">0%</span></div>
-    <div class="p-track"><div class="p-fill" id="p-fill"></div></div>
+<div class="bar">
+  <div class="bar-in">
+    <div class="brand"><span class="dot"></span><span class="nm">Doux<span>Hub</span></span></div>
+    <div class="ptrack"><div class="pfill" id="pfill"></div></div>
   </div>
 </div>
 
-<main>
-  <div class="wrap">
+<div class="stage">
+  <div class="card">
 
-    <!-- DADOS DA CLÍNICA -->
-    <section class="section">
-      <div class="sec-head">
-        <h2>Dados da clínica</h2>
-        <p>Essas informações identificam o diagnóstico e são usadas para enviar o resultado no seu WhatsApp.</p>
+    <!-- 1 · dados -->
+    <div class="step on" data-step="0">
+      <span class="kicker">Diagnóstico da sua clínica</span>
+      <h2 class="q">Vamos começar pela sua clínica.</h2>
+      <p class="hint">Usamos isso só para enviar a sua leitura no WhatsApp.</p>
+      <div class="fields">
+        <div class="field"><label>Nome da clínica <span class="req">*</span></label><input type="text" id="f-clinica" autocomplete="organization"></div>
+        <div class="field"><label>Seu nome <span class="req">*</span></label><input type="text" id="f-resp" autocomplete="name"></div>
+        <div class="field"><label>WhatsApp <span class="req">*</span></label><input type="tel" id="f-whats" inputmode="tel" placeholder="(00) 00000-0000" autocomplete="tel"></div>
       </div>
-      <div class="card">
-        <div class="fields">
-          <div class="field"><label>Nome da clínica <span class="req">*</span></label><input type="text" id="f-clinica" autocomplete="organization"></div>
-          <div class="field"><label>Responsável <span class="req">*</span></label><input type="text" id="f-resp" autocomplete="name"></div>
-          <div class="field"><label>WhatsApp <span class="req">*</span></label><input type="tel" id="f-whats" inputmode="tel" placeholder="(00) 00000-0000" autocomplete="tel"></div>
-          <div class="field"><label>Instagram</label><input type="text" id="f-insta" placeholder="@suaclinica"></div>
-          <div class="field"><label>Cidade / Estado</label><input type="text" id="f-cidade"></div>
-          <div class="field"><label>Site ou link principal</label><input type="text" id="f-site" inputmode="url"></div>
-        </div>
+      <div class="nav">
+        <button class="btn btn-gold" data-next>Começar</button>
       </div>
-    </section>
+      <div class="alert" id="al-0">Preencha os campos em destaque para continuar.</div>
+    </div>
 
-    <div id="form-sections"></div>
-
-    <!-- ENVIO -->
-    <section class="section">
-      <div class="send">
-        <h2>Enviar diagnóstico</h2>
-        <p>Ao enviar, suas respostas geram uma pontuação que indica o plano em que sua clínica se encaixa. Logo em seguida, você recebe no WhatsApp informado o resultado e a proposta personalizada.</p>
-        <button class="btn" id="btn-send">Enviar diagnóstico</button>
-        <p class="pending" id="pending"></p>
-        <p class="safe">Resposta enviada com segurança para análise interna da DouxHub.</p>
-        <div class="msg" id="msg-ok"><b>Diagnóstico enviado com sucesso.</b> Recebemos suas respostas. Em instantes, o plano indicado para a sua clínica chega no WhatsApp informado.</div>
-        <div class="msg" id="msg-err"><b>Não foi possível enviar agora.</b> Verifique sua conexão e tente novamente em alguns instantes.</div>
+    <!-- 2 · volume -->
+    <div class="step" data-step="1">
+      <span class="kicker">Movimento</span>
+      <h2 class="q">Quantos novos contatos sua clínica recebe por mês?</h2>
+      <p class="hint">Considere todos os canais juntos.</p>
+      <div class="opts" data-q="volume">
+        <label class="opt"><span class="mk"></span><span>Até 30 contatos</span><input type="radio" name="volume" value="Até 30 contatos" data-i="0" hidden></label>
+        <label class="opt"><span class="mk"></span><span>De 31 a 100 contatos</span><input type="radio" name="volume" value="De 31 a 100 contatos" data-i="1" hidden></label>
+        <label class="opt"><span class="mk"></span><span>Mais de 100 contatos</span><input type="radio" name="volume" value="Mais de 100 contatos" data-i="2" hidden></label>
       </div>
-    </section>
+      <div class="nav">
+        <button class="btn btn-back" data-back>Voltar</button>
+        <button class="btn btn-gold" data-next>Continuar</button>
+      </div>
+      <div class="alert" id="al-1">Escolha uma opção para continuar.</div>
+    </div>
+
+    <!-- 3 · dor -->
+    <div class="step" data-step="2">
+      <span class="kicker">O que mais acontece</span>
+      <h2 class="q">Onde você sente que mais perde dinheiro hoje?</h2>
+      <p class="hint">Escolha o que mais pesa na sua rotina.</p>
+      <div class="opts" data-q="dor">
+        <label class="opt"><span class="mk"></span><span>Orçamento que a pessoa pediu e ninguém retomou</span><input type="radio" name="dor" value="Orçamento esquecido" data-i="0" hidden></label>
+        <label class="opt"><span class="mk"></span><span>Cliente que sumiu e não voltou mais</span><input type="radio" name="dor" value="Cliente que sumiu" data-i="1" hidden></label>
+        <label class="opt"><span class="mk"></span><span>Retorno vencido que ninguém chamou</span><input type="radio" name="dor" value="Retorno vencido" data-i="2" hidden></label>
+        <label class="opt"><span class="mk"></span><span>Agenda com buracos e movimento irregular</span><input type="radio" name="dor" value="Agenda com buracos" data-i="3" hidden></label>
+      </div>
+      <div class="nav">
+        <button class="btn btn-back" data-back>Voltar</button>
+        <button class="btn btn-gold" data-next>Continuar</button>
+      </div>
+      <div class="alert" id="al-2">Escolha uma opção para continuar.</div>
+    </div>
+
+    <!-- 4 · previsibilidade -->
+    <div class="step" data-step="3">
+      <span class="kicker">Previsibilidade</span>
+      <h2 class="q">Hoje você consegue saber quanto a clínica vai faturar no mês?</h2>
+      <p class="hint">Antes do mês acabar.</p>
+      <div class="opts" data-q="previsao">
+        <label class="opt"><span class="mk"></span><span>Não, só descubro no fim do mês</span><input type="radio" name="previsao" value="Não tem previsão" data-i="0" hidden></label>
+        <label class="opt"><span class="mk"></span><span>Tenho uma ideia vaga, no feeling</span><input type="radio" name="previsao" value="Previsão no feeling" data-i="1" hidden></label>
+        <label class="opt"><span class="mk"></span><span>Sim, acompanho de perto</span><input type="radio" name="previsao" value="Acompanha de perto" data-i="2" hidden></label>
+      </div>
+      <div class="nav">
+        <button class="btn btn-back" data-back>Voltar</button>
+        <button class="btn btn-gold" data-next>Continuar</button>
+      </div>
+      <div class="alert" id="al-3">Escolha uma opção para continuar.</div>
+    </div>
+
+    <!-- 5 · impacto -->
+    <div class="step" data-step="4">
+      <span class="kicker">Impacto</span>
+      <h2 class="q">O quanto isso pesa no faturamento da clínica?</h2>
+      <p class="hint">Na sua percepção.</p>
+      <div class="opts" data-q="impacto">
+        <label class="opt"><span class="mk"></span><span>Impacta bastante — é dinheiro de verdade saindo</span><input type="radio" name="impacto" value="Impacta bastante" data-i="2" hidden></label>
+        <label class="opt"><span class="mk"></span><span>Impacta de forma moderada</span><input type="radio" name="impacto" value="Impacto moderado" data-i="1" hidden></label>
+        <label class="opt"><span class="mk"></span><span>Impacta pouco</span><input type="radio" name="impacto" value="Impacta pouco" data-i="0" hidden></label>
+      </div>
+      <div class="nav">
+        <button class="btn btn-back" data-back>Voltar</button>
+        <button class="btn btn-gold" data-next>Continuar</button>
+      </div>
+      <div class="alert" id="al-4">Escolha uma opção para continuar.</div>
+    </div>
+
+    <!-- 6 · urgência -->
+    <div class="step" data-step="5">
+      <span class="kicker">Momento</span>
+      <h2 class="q">Quando você quer resolver isso?</h2>
+      <p class="hint">Para entendermos a prioridade da sua clínica.</p>
+      <div class="opts" data-q="urgencia">
+        <label class="opt"><span class="mk"></span><span>Agora — quero parar de perder dinheiro</span><input type="radio" name="urgencia" value="Agora" data-i="2" hidden></label>
+        <label class="opt"><span class="mk"></span><span>Em breve, quero avaliar</span><input type="radio" name="urgencia" value="Em breve" data-i="1" hidden></label>
+        <label class="opt"><span class="mk"></span><span>Só pesquisando por enquanto</span><input type="radio" name="urgencia" value="Pesquisando" data-i="0" hidden></label>
+      </div>
+      <div class="nav">
+        <button class="btn btn-back" data-back>Voltar</button>
+        <button class="btn btn-gold" id="btn-send" data-send>Ver minha leitura</button>
+      </div>
+      <div class="alert" id="al-5">Escolha uma opção para continuar.</div>
+    </div>
+
+    <!-- final -->
+    <div class="step done" data-step="6">
+      <div class="ring"><svg viewBox="0 0 24 24" fill="none"><path d="M5 13l4 4L19 7" stroke="#1B1505" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+      <h2>Sua leitura está a caminho.</h2>
+      <p>Recebemos as suas respostas. Em instantes você recebe no WhatsApp informado a leitura da sua operação e o plano indicado para a sua clínica.</p>
+      <div class="plan-pill" id="plan-pill" style="display:none"></div>
+      <div class="alert" id="al-send" style="text-align:center">Não foi possível enviar agora. Verifique a conexão e toque novamente.</div>
+    </div>
 
   </div>
-</main>
+</div>
 
-<footer>DouxHub · Diagnóstico de visão comercial para clínicas de estética</footer>
+<div class="foot">DouxHub · Visão comercial para clínicas de estética</div>
 
 <script>
-/* =====================================================
-   CONFIGURAÇÃO
-===================================================== */
 const SUPABASE_URL = "https://cmyxfytsumyyrbrgqggk.supabase.co";
 const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImNteXhmeXRzdW15eXJicmdxZ2drIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODA4NTgxNjEsImV4cCI6MjA5NjQzNDE2MX0.EYAl6ztpVBIBcxxO_hPAetAn3cpqccOBrycgWqUB9Eg";
 
-/* =====================================================
-   PERGUNTAS
-   type: 'radio' (uma opção) | 'check' (múltipla) | 'text' (aberta)
-   s: pontuação de maturidade da opção (0 = caótico, 2 = estruturado)
-===================================================== */
-const SECTIONS = [
-{ title:"1. Aquisição de leads",
-  desc:"Vamos entender se a clínica gera demanda e se sabe de onde essa demanda vem.",
-  qs:[
-  { type:"radio", t:"Quantos novos contatos a clínica recebe por mês?", h:"Considere todos os canais.",
-    opts:[["Até 30 contatos",0],["De 31 a 100 contatos",1],["Mais de 100 contatos",2]] },
-  { type:"check", t:"Quais canais geram contatos hoje?", h:"Marque todos que entram na rotina.",
-    opts:[["Instagram"],["WhatsApp direto"],["Indicação"],["Anúncios / tráfego pago"],["Site / landing page"]] },
-  { type:"radio", t:"Qual canal mais gera contatos?", h:"Escolha o canal principal.",
-    opts:[["Instagram / indicação / orgânico",0],["WhatsApp direto",1],["Anúncios / tráfego pago",2]] },
-  { type:"radio", t:"Como você avalia a qualidade dos leads?", h:"Se chegam pessoas prontas ou muito frias.",
-    opts:[["Muitos curiosos e pouco qualificados",0],["Misturado: alguns bons, outros fracos",1],["Boa parte já chega interessada",2]] },
-  { type:"radio", t:"A clínica sabe de onde veio cada lead?", h:"Origem, campanha, indicação ou rede social.",
-    opts:[["Não sabemos com clareza",0],["Às vezes conseguimos identificar",1],["Sim, temos controle da origem",2]] }
-]},
-{ title:"2. Atendimento e organização",
-  desc:"Aqui medimos se o interesse que chega vira conversa bem conduzida.",
-  qs:[
-  { type:"radio", t:"Como os contatos são organizados hoje?", h:"Se existe controle ou tudo fica espalhado.",
-    opts:[["WhatsApp/Instagram, sem controle claro",0],["Planilha ou anotações manuais",1],["Sistema, CRM ou agenda organizada",2]] },
-  { type:"radio", t:"Quanto tempo a clínica costuma levar para responder um novo contato?", h:"Tempo médio nos horários de movimento.",
-    opts:[["Horas ou até no dia seguinte",0],["Entre 30 minutos e algumas horas",1],["Normalmente em poucos minutos",2]] },
-  { type:"radio", t:"Existe padrão de atendimento?", h:"Mensagem, perguntas certas, sequência e próximos passos.",
-    opts:[["Não, cada pessoa responde de um jeito",0],["Existe algo básico, mas sem clareza",1],["Sim, temos padrão de atendimento",2]] },
-  { type:"check", t:"Quais problemas aparecem no atendimento?", h:"Marque tudo que acontece hoje.",
-    opts:[["Demora para responder"],["Contato fica esquecido"],["Não tem histórico claro"],["Cada atendente responde de um jeito"],["Não existe próximo passo claro"],["Não vejo grandes problemas"]] }
-]},
-{ title:"3. Qualificação e intenção de compra",
-  desc:"Nem todo contato tem o mesmo valor. Aqui entendemos se a clínica separa curiosos de oportunidades reais.",
-  qs:[
-  { type:"radio", t:"A clínica qualifica os leads antes de passar valores?", h:"Ex: objetivo, procedimento, urgência, histórico, expectativa.",
-    opts:[["Não, normalmente já responde o que a pessoa pede",0],["Às vezes faz algumas perguntas",1],["Sim, existe qualificação antes do próximo passo",2]] },
-  { type:"check", t:"Quais informações são coletadas antes do agendamento?", h:"Marque o que costuma ser perguntado.",
-    opts:[["Procedimento de interesse"],["Objetivo / dor da pessoa"],["Urgência"],["Histórico ou experiência anterior"],["Faixa de orçamento"],["Quase nenhuma informação"]] },
-  { type:"radio", t:"Quando a clínica costuma falar preço?", h:"Isso muda muito a conversão.",
-    opts:[["Logo no começo da conversa",0],["Depois de entender um pouco o caso",1],["Prefere levar para avaliação/consulta",2]] }
-]},
-{ title:"4. Agenda e comparecimento",
-  desc:"Aqui avaliamos se o lead consegue sair da conversa e virar compromisso real.",
-  qs:[
-  { type:"radio", t:"Como funciona o processo de agendamento?", h:"Se é simples para o lead marcar.",
-    opts:[["Manual, por conversa e disponibilidade",0],["Organizado, mas ainda depende da equipe",1],["Tem agenda/sistema ou fluxo bem claro",2]] },
-  { type:"radio", t:"A clínica sofre com faltas ou desmarcações?", h:"No-show, remarcações em cima da hora ou abandono.",
-    opts:[["Sim, acontece bastante",0],["Acontece às vezes",1],["Raramente é um problema",2]] },
-  { type:"radio", t:"A clínica envia lembretes antes do atendimento?", h:"Para reduzir faltas e aumentar comparecimento.",
-    opts:[["Não existe rotina de lembrete",0],["Envia manualmente quando lembra",1],["Existe rotina clara de confirmação/lembrete",2]] }
-]},
-{ title:"5. Orçamentos e follow-up",
-  desc:"Essa é uma das áreas onde clínicas mais perdem dinheiro sem perceber.",
-  qs:[
-  { type:"radio", t:"O que acontece com quem pediu orçamento e não fechou?", h:"Orçamentos frios, pessoas que somem ou ficam de responder.",
-    opts:[["Normalmente fica perdido no WhatsApp",0],["Às vezes retomamos depois",1],["Existe processo claro de retomada",2]] },
-  { type:"radio", t:"Quantas tentativas de follow-up são feitas normalmente?", h:"Depois que o lead não responde ou não fecha.",
-    opts:[["Nenhuma ou quase nenhuma",0],["Uma tentativa",1],["Duas ou mais tentativas com rotina",2]] },
-  { type:"check", t:"Por que os contatos geralmente não fecham?", h:"Marque os motivos mais comuns.",
-    opts:[["Acham caro / pedem desconto"],["A clínica demora para retornar"],["A pessoa some depois do orçamento"],["Não existe urgência para fechar"],["Vai para concorrente"],["Não sabemos exatamente"]] },
-  { type:"check", t:"Por onde a clínica retoma contatos que esfriaram?", h:"Marque os canais usados para recuperação.",
-    opts:[["WhatsApp"],["Ligação"],["Instagram"],["E-mail"],["Não retomamos de forma estruturada"]] }
-]},
-{ title:"6. Clientes inativos e recompra",
-  desc:"Muitas clínicas têm receita parada na própria base de clientes.",
-  qs:[
-  { type:"radio", t:"A clínica tem clientes inativos que poderiam voltar?", h:"Pessoas que já compraram, mas não voltaram.",
-    opts:[["Sim, muitos clientes poderiam ser reativados",0],["Sim, alguns clientes",1],["Temos controle ativo desses clientes",2]] },
-  { type:"radio", t:"Hoje existe ação para reativar clientes antigos?", h:"Campanhas, lembretes, ofertas, retornos ou check-ins.",
-    opts:[["Não temos ação de reativação",0],["Fazemos de vez em quando",1],["Temos processo ativo de reativação",2]] },
-  { type:"check", t:"Quais oportunidades de recompra existem?", h:"Marque o que faz sentido para a clínica.",
-    opts:[["Manutenção de procedimentos"],["Novos procedimentos para clientes antigos"],["Pacotes / planos"],["Datas sazonais / campanhas"],["Não sabemos como explorar"]] }
-]},
-{ title:"7. Métricas, equipe e ferramentas",
-  desc:"Aqui medimos maturidade comercial e clareza de gestão.",
-  qs:[
-  { type:"check", t:"Quais métricas a clínica acompanha?", h:"Marque tudo que é acompanhado com regularidade.",
-    opts:[["Quantidade de leads"],["Agendamentos"],["Comparecimento"],["Fechamentos / vendas"],["Ticket médio"],["Nenhuma métrica clara"]] },
-  { type:"check", t:"Quais ferramentas a clínica usa hoje?", h:"Marque tudo que faz parte da rotina.",
-    opts:[["WhatsApp"],["Agenda digital"],["Planilha"],["CRM / sistema"],["Automação / lembretes"],["Nenhuma ferramenta estruturada"]] },
-  { type:"radio", t:"Quem cuida dos contatos comerciais?", h:"Atendimento, retorno e agenda.",
-    opts:[["A própria pessoa responsável pela clínica",0],["Recepção / atendente",1],["Equipe dedicada ou mais de uma pessoa",2]] },
-  { type:"radio", t:"A equipe consegue acompanhar todos os contatos?", h:"Sem deixar retorno, orçamento ou cliente parado.",
-    opts:[["Não, a equipe vive sobrecarregada",0],["Consegue, mas no limite",1],["Sim, conseguimos acompanhar bem",2]] }
-]},
-{ title:"8. Gargalo, urgência e decisão",
-  desc:"Por fim, entendemos a dor principal, o impacto no faturamento e o momento da clínica.",
-  qs:[
-  { type:"radio", t:"Qual é o principal gargalo hoje?", h:"O ponto que mais atrapalha vender melhor.",
-    opts:[["Responder e organizar contatos",0],["Transformar interesse em agendamento",1],["Fechar vendas e recuperar quem sumiu",2]] },
-  { type:"radio", t:"Hoje, qual é a principal dificuldade comercial?", h:"Escolha a dor central.",
-    opts:[["Organizar contatos, agenda e retornos",0],["Recuperar oportunidades e clientes parados",1],["Crescer com mais controle e performance",2]] },
-  { type:"radio", t:"O quanto esse problema impacta o faturamento?", h:"Na percepção da clínica.",
-    opts:[["Impacta pouco",0],["Impacta de forma moderada",1],["Impacta bastante",2]] },
-  { type:"radio", t:"Qual seria o momento para resolver isso?", h:"Urgência e prontidão.",
-    opts:[["Precisamos disso agora",2],["Faz sentido avaliar em breve",1],["Não é prioridade no momento",0]] }
-]},
-{ title:"9. Perguntas abertas",
-  desc:"Essas respostas deixam o diagnóstico muito mais preciso.",
-  qs:[
-  { type:"text", t:"Qual problema comercial mais incomoda hoje?", h:"Descreva com suas palavras." },
-  { type:"text", t:"Qual principal objetivo comercial da clínica nos próximos meses?", h:"Ex: aumentar agenda, recuperar clientes, organizar atendimento, melhorar vendas." },
-  { type:"text", t:"Existe algo importante que não foi perguntado?", h:"Equipe, rotina, dificuldade, contexto, volume ou urgência." }
-]}
-];
+const steps = [...document.querySelectorAll('.step')];
+const pfill = document.getElementById('pfill');
+let cur = 0;
+const totalQ = 6; // telas de pergunta (0..5)
 
-/* ---------- renderização ---------- */
-const root = document.getElementById('form-sections');
-let qIndex = 0;
-const flatQs = [];
-SECTIONS.forEach(sec => {
-  const s = document.createElement('section');
-  s.className = 'section';
-  s.innerHTML = `<div class="sec-head"><h2>${sec.title}</h2><p>${sec.desc}</p></div>`;
-  sec.qs.forEach(q => {
-    qIndex++;
-    q.n = qIndex;
-    flatQs.push(q);
-    const card = document.createElement('div');
-    card.className = 'card';
-    card.dataset.n = qIndex;
-    let inner = `<div class="q-head"><span class="q-num">${qIndex}</span><span class="q-title">${q.t}</span></div>`;
-    if (q.h) inner += `<p class="q-hint">${q.h}</p>`;
-    if (q.type === 'check') inner += `<p class="q-multi">Pode marcar mais de uma opção</p>`;
-    if (q.type === 'text'){
-      inner += `<textarea class="ta" data-n="${qIndex}" rows="4"></textarea>`;
-    } else {
-      inner += `<div class="opts">` + q.opts.map((o,i) =>
-        `<label class="opt ${q.type==='check'?'check':''}">
-          <input type="${q.type==='check'?'checkbox':'radio'}" name="q${qIndex}" value="${o[0]}" data-s="${o[1]??0}" data-i="${i}">
-          <span class="mark"></span><span>${o[0]}</span>
-        </label>`).join('') + `</div>`;
+function show(i){
+  steps.forEach(s => s.classList.toggle('on', +s.dataset.step === i));
+  cur = i;
+  const pct = Math.min(i / totalQ * 100, 100);
+  pfill.style.width = pct + '%';
+  window.scrollTo({top:0, behavior:'smooth'});
+}
+
+/* seleção de opção */
+document.querySelectorAll('.opts').forEach(group => {
+  group.querySelectorAll('.opt').forEach(opt => {
+    opt.addEventListener('click', () => {
+      group.querySelectorAll('.opt').forEach(o => o.classList.remove('sel'));
+      opt.classList.add('sel');
+      opt.querySelector('input').checked = true;
+      group.closest('.step').querySelector('.alert').style.display = 'none';
+    });
+  });
+});
+
+/* validação por etapa */
+function stepValid(i){
+  if (i === 0){
+    const ids = ['f-clinica','f-resp','f-whats'];
+    let ok = true;
+    ids.forEach(id => {
+      const el = document.getElementById(id);
+      const bad = !el.value.trim();
+      el.classList.toggle('bad', bad);
+      if (bad) ok = false;
+    });
+    return ok;
+  }
+  const group = steps[i].querySelector('.opts');
+  return group ? !!group.querySelector('input:checked') : true;
+}
+
+/* avançar / voltar */
+document.querySelectorAll('[data-next]').forEach(b => {
+  b.addEventListener('click', () => {
+    if (!stepValid(cur)){
+      document.getElementById('al-' + cur).style.display = 'block';
+      return;
     }
-    card.innerHTML = inner;
-    s.appendChild(card);
+    show(cur + 1);
   });
-  root.appendChild(s);
+});
+document.querySelectorAll('[data-back]').forEach(b => {
+  b.addEventListener('click', () => show(cur - 1));
+});
+document.querySelectorAll('.field input').forEach(inp => {
+  inp.addEventListener('input', () => inp.classList.remove('bad'));
 });
 
-document.getElementById('p-total').textContent = flatQs.length;
-
-/* ---------- interação e progresso ---------- */
-function refresh(){
-  let answered = 0;
-  flatQs.forEach(q => {
-    const card = document.querySelector(`.card[data-n="${q.n}"]`);
-    let ok = false;
-    if (q.type === 'text'){
-      ok = card.querySelector('textarea').value.trim().length > 0;
-    } else {
-      ok = !!card.querySelector('input:checked');
-    }
-    card.classList.toggle('done', ok);
-    if (ok) answered++;
-  });
-  document.getElementById('p-count').textContent = answered;
-  const pct = Math.round(answered / flatQs.length * 100);
-  document.getElementById('p-pct').textContent = pct + '%';
-  document.getElementById('p-fill').style.width = pct + '%';
-  return answered;
-}
-document.addEventListener('change', e => {
-  if (e.target.matches('.opt input')){
-    const card = e.target.closest('.card');
-    card.classList.remove('missing');
-    const group = card.querySelectorAll('.opt');
-    group.forEach(l => l.classList.toggle('sel', l.querySelector('input').checked));
-    refresh();
-  }
-});
-document.addEventListener('input', e => {
-  if (e.target.matches('.ta')){
-    e.target.closest('.card').classList.remove('missing');
-    refresh();
-  }
-  if (e.target.matches('.field input')) e.target.style.borderColor = '';
-});
-
-/* ---------- pontuação e plano sugerido ---------- */
-function selectedRadioIndex(n){
-  const sel = document.querySelector(`input[name="q${n}"]:checked`);
-  return sel ? parseInt(sel.dataset.i, 10) : null;
-}
-function selectedRadioScore(n){
-  const sel = document.querySelector(`input[name="q${n}"]:checked`);
-  return sel ? parseInt(sel.dataset.s || 0, 10) : 0;
-}
-function checkedValues(n){
-  return [...document.querySelectorAll(`input[name="q${n}"]:checked`)].map(i => i.value);
-}
-function hasChecked(n, text){
-  return checkedValues(n).some(v => v.toLowerCase().includes(text.toLowerCase()));
-}
-function computeResult(){
-  let score = 0, max = 0;
-  flatQs.forEach(q => {
-    if (q.type !== 'radio') return;
-    const sel = document.querySelector(`input[name="q${q.n}"]:checked`);
-    max += 2;
-    if (sel) score += parseInt(sel.dataset.s || 0, 10);
-  });
-
-  let complexity = 0;
-
-  const volumeIdx = selectedRadioIndex(1);
-  const canalPrincipalIdx = selectedRadioIndex(3);
-  const origemScore = selectedRadioScore(5);
-  const organizacaoScore = selectedRadioScore(6);
-  const followScore = selectedRadioScore(16);
-  const tentativasScore = selectedRadioScore(17);
-  const inativosScore = selectedRadioScore(20);
-  const reativacaoScore = selectedRadioScore(21);
-  const equipeIdx = selectedRadioIndex(25);
-  const capacidadeScore = selectedRadioScore(26);
-  const gargaloIdx = selectedRadioIndex(27);
-  const dificuldadeIdx = selectedRadioIndex(28);
-  const impactoIdx = selectedRadioIndex(29);
-  const urgenciaIdx = selectedRadioIndex(30);
-
-  if (volumeIdx === 2) complexity += 3;
-  else if (volumeIdx === 1) complexity += 2;
-  else complexity += 1;
-
-  if (canalPrincipalIdx === 2) complexity += 2;
-  if (hasChecked(2, 'Anúncios')) complexity += 2;
-  if (hasChecked(2, 'Site')) complexity += 1;
-
-  if (origemScore === 0) complexity += 2;
-  else if (origemScore === 1) complexity += 1;
-
-  if (organizacaoScore === 0) complexity += 2;
-  else if (organizacaoScore === 1) complexity += 1;
-
-  const problemasAtendimento = checkedValues(9).filter(v => !v.includes('Não vejo')).length;
-  complexity += Math.min(problemasAtendimento, 3);
-
-  if (followScore === 0) complexity += 2;
-  else if (followScore === 1) complexity += 1;
-
-  if (tentativasScore === 0) complexity += 2;
-  else if (tentativasScore === 1) complexity += 1;
-
-  const motivosNaoFecha = checkedValues(18).filter(v => !v.includes('Não sabemos')).length;
-  if (motivosNaoFecha >= 3) complexity += 2;
-  else if (motivosNaoFecha >= 1) complexity += 1;
-
-  if (hasChecked(19, 'Não retomamos')) complexity += 2;
-
-  if (inativosScore === 0) complexity += 2;
-  else if (inativosScore === 1) complexity += 1;
-
-  if (reativacaoScore === 0) complexity += 2;
-  else if (reativacaoScore === 1) complexity += 1;
-
-  if (hasChecked(22, 'Não sabemos')) complexity += 1;
-
-  if (hasChecked(23, 'Nenhuma')) complexity += 2;
-  else if (checkedValues(23).length <= 2) complexity += 1;
-
-  if (hasChecked(24, 'Nenhuma')) complexity += 2;
-  else if (!hasChecked(24, 'CRM') && !hasChecked(24, 'Automação')) complexity += 1;
-
-  if (equipeIdx === 2) complexity += 2;
-  else if (equipeIdx === 1) complexity += 1;
-
-  if (capacidadeScore === 0) complexity += 2;
-  else if (capacidadeScore === 1) complexity += 1;
-
-  if (gargaloIdx === 2) complexity += 2;
-  else if (gargaloIdx === 1) complexity += 1;
-
-  if (dificuldadeIdx === 2) complexity += 2;
-  else if (dificuldadeIdx === 1) complexity += 1;
-
-  if (impactoIdx === 2) complexity += 2;
-  else if (impactoIdx === 1) complexity += 1;
-
-  if (urgenciaIdx === 0) complexity += 2;
-  else if (urgenciaIdx === 1) complexity += 1;
-
-  let plan = 'Start';
-
-  if (
-    complexity >= 24 ||
-    (volumeIdx === 2 && impactoIdx === 2) ||
-    (volumeIdx === 2 && urgenciaIdx === 0) ||
-    (equipeIdx === 2 && dificuldadeIdx === 2) ||
-    (hasChecked(2, 'Anúncios') && dificuldadeIdx === 2 && impactoIdx === 2)
-  ) {
-    plan = 'Elite';
-  } else if (
-    complexity >= 13 ||
-    volumeIdx === 1 ||
-    volumeIdx === 2 ||
-    hasChecked(2, 'Anúncios') ||
-    impactoIdx === 1 ||
-    impactoIdx === 2 ||
-    dificuldadeIdx === 1 ||
-    dificuldadeIdx === 2
-  ) {
-    plan = 'Growth';
-  }
-
-  return { score, maxScore: max, plan };
-}
-
-/* ---------- UTM ---------- */
+/* UTM */
 function getUtm(){
   const p = new URLSearchParams(location.search), utm = {};
   ['utm_source','utm_medium','utm_campaign','utm_content','utm_term'].forEach(k => {
@@ -576,76 +342,68 @@ function getUtm(){
   });
   return utm;
 }
+function idx(name){
+  const el = document.querySelector(`input[name="${name}"]:checked`);
+  return el ? parseInt(el.dataset.i, 10) : null;
+}
+function val(name){
+  const el = document.querySelector(`input[name="${name}"]:checked`);
+  return el ? el.value : null;
+}
 
-/* ---------- envio ---------- */
-const btn = document.getElementById('btn-send');
-btn.addEventListener('click', async () => {
-  const required = [['f-clinica','nome da clínica'],['f-resp','responsável'],['f-whats','WhatsApp']];
-  let firstEmpty = null;
-  for (const [id] of required){
-    const el = document.getElementById(id);
-    const empty = !el.value.trim();
-    el.style.borderColor = empty ? '#B0542F' : '';
-    if (empty && !firstEmpty) firstEmpty = el;
-  }
-  if (firstEmpty){
-    document.getElementById('pending').style.display = 'block';
-    document.getElementById('pending').textContent = 'Preencha os dados da clínica destacados em vermelho no início da página.';
-    firstEmpty.scrollIntoView({behavior:'smooth', block:'center'});
-    firstEmpty.focus();
+/* plano por complexidade/necessidade */
+function computePlan(){
+  const volume = idx('volume');     // 0..2
+  const impacto = idx('impacto');   // 0..2
+  const urgencia = idx('urgencia'); // 0..2
+  const previsao = idx('previsao'); // 0..2 (0 = nenhuma previsão = mais necessidade)
+
+  let c = 0;
+  c += [1,2,3][volume] ?? 1;
+  c += [0,1,2][impacto] ?? 0;
+  c += [0,1,2][urgencia] ?? 0;
+  c += previsao === 0 ? 2 : (previsao === 1 ? 1 : 0);
+
+  let plan = 'Start';
+  if (volume === 2 && impacto === 2) plan = 'Elite';
+  else if (c >= 7) plan = 'Elite';
+  else if (c >= 4 || impacto >= 1 || volume >= 1) plan = 'Growth';
+  return plan;
+}
+
+/* envio */
+const send = document.querySelector('[data-send]');
+send.addEventListener('click', async () => {
+  if (!stepValid(5)){
+    document.getElementById('al-5').style.display = 'block';
     return;
   }
+  send.disabled = true; send.textContent = 'Enviando…';
 
-  refresh();
-  document.querySelectorAll('.card.missing').forEach(c => c.classList.remove('missing'));
-  const pendentes = flatQs.filter(q => {
-    if (q.type === 'text'){
-      return !document.querySelector(`.ta[data-n="${q.n}"]`).value.trim();
-    }
-    return !document.querySelector(`input[name="q${q.n}"]:checked`);
-  });
-  if (pendentes.length){
-    pendentes.forEach(q => {
-      const c = document.querySelector(`.card[data-n="${q.n}"]`);
-      if (c) c.classList.add('missing');
-    });
-    const first = document.querySelector(`.card[data-n="${pendentes[0].n}"]`);
-    document.getElementById('pending').style.display = 'block';
-    document.getElementById('pending').textContent = pendentes.length === 1
-      ? `Falta responder a pergunta ${pendentes[0].n} — destacada em vermelho para você.`
-      : `Faltam ${pendentes.length} perguntas. A primeira é a nº ${pendentes[0].n}, destacada em vermelho para você.`;
-    if (first) first.scrollIntoView({behavior:'smooth', block:'center'});
-    return;
-  }
-  document.getElementById('pending').style.display = 'none';
-
-  const answers = flatQs.map(q => {
-    let value;
-    if (q.type === 'text') value = document.querySelector(`.ta[data-n="${q.n}"]`).value.trim();
-    else if (q.type === 'check') value = [...document.querySelectorAll(`input[name="q${q.n}"]:checked`)].map(i => i.value);
-    else { const s = document.querySelector(`input[name="q${q.n}"]:checked`); value = s ? s.value : null; }
-    return { n: q.n, question: q.t, value };
-  });
-  const result = computeResult();
+  const plan = computePlan();
+  const respostas = [
+    { q:'Novos contatos por mês', value: val('volume') },
+    { q:'Onde mais perde dinheiro', value: val('dor') },
+    { q:'Consegue prever o faturamento do mês', value: val('previsao') },
+    { q:'Impacto no faturamento', value: val('impacto') },
+    { q:'Quando quer resolver', value: val('urgencia') }
+  ];
 
   const payload = {
     clinica: document.getElementById('f-clinica').value.trim(),
     responsavel: document.getElementById('f-resp').value.trim(),
     whatsapp: document.getElementById('f-whats').value.trim(),
-    instagram: document.getElementById('f-insta').value.trim(),
-    cidade: document.getElementById('f-cidade').value.trim(),
-    site: document.getElementById('f-site').value.trim(),
-    score: result.score,
-    max_score: result.maxScore,
+    instagram: '',
+    cidade: '',
+    site: '',
+    score: null,
+    max_score: null,
     budget_index: null,
-    plano_sugerido: result.plan,
+    plano_sugerido: plan,
     utm: getUtm(),
-    respostas: answers
+    respostas
   };
 
-  btn.disabled = true; btn.textContent = 'Enviando…';
-  document.getElementById('msg-ok').classList.remove('ok');
-  document.getElementById('msg-err').classList.remove('err');
   try{
     const r = await fetch(`${SUPABASE_URL}/rest/v1/dx_diagnosticos`, {
       method:'POST',
@@ -658,19 +416,15 @@ btn.addEventListener('click', async () => {
       body: JSON.stringify(payload)
     });
     if (!r.ok) throw new Error('HTTP ' + r.status);
-    const ok = document.getElementById('msg-ok');
-    ok.classList.add('ok');
     if (typeof fbq === 'function') fbq('track', 'Lead');
-    ok.scrollIntoView({behavior:'smooth', block:'center'});
-    btn.textContent = 'Diagnóstico enviado';
+    show(6);
   } catch(err){
     console.error(err);
-    document.getElementById('msg-err').classList.add('err');
-    btn.disabled = false; btn.textContent = 'Enviar diagnóstico';
+    send.disabled = false; send.textContent = 'Ver minha leitura';
+    document.getElementById('al-5').textContent = 'Não foi possível enviar agora. Verifique a conexão e tente novamente.';
+    document.getElementById('al-5').style.display = 'block';
   }
 });
-
-refresh();
 </script>
 </body>
 </html>
